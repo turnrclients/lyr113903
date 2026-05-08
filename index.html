@@ -1,31 +1,26 @@
-<!DOCTYPE html>
-<html>
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <base href=''>
-    <title>Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap"
-        rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/middle_sections.css">
-    <link rel="stylesheet" href="assets/css/anim-effects.css">
-    <link rel="stylesheet" href="assets/css/components/header-39.css">
-    <link rel="stylesheet" href="assets/css/components/footer-19.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/plugins.css">
-    <link rel="stylesheet" href="assets/css/custom-Imports.css">
-    <link rel="stylesheet" href="assets/css/custom/editmode.css">
-    <link rel="stylesheet" href="assets/css/resonsive.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="keywords"/>
+<base href=""/>
+<title>Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<link href="assets/css/style.css" rel="stylesheet"/>
+<link href="assets/css/middle_sections.css" rel="stylesheet"/>
+<link href="assets/css/anim-effects.css" rel="stylesheet"/>
+<link href="assets/css/components/header-39.css" rel="stylesheet"/>
+<link href="assets/css/components/footer-19.css" rel="stylesheet"/>
+<link href="assets/css/bootstrap.css" rel="stylesheet"/>
+<link href="assets/css/plugins.css" rel="stylesheet"/>
+<link href="assets/css/custom-Imports.css" rel="stylesheet"/>
+<link href="assets/css/custom/editmode.css" rel="stylesheet"/>
+<link href="assets/css/resonsive.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" rel="stylesheet"/>
+<style>
         :root {
             --site-font: "Quicksand";
         }
@@ -42,45 +37,74 @@
             font-family: 'remixicon' !important;
         }
     </style>
-</head>
+<style id="aiModalSpinnerStyles">
+        .ai-modal-content {
+            position: relative;
+        }
 
-<body class="theme-1">
-    <div id="wrapper">
-        <div id="header" data-src="header.html"></div>
-        <div id="mainPageContent">
-            <section class="section-wrapper about-60">
+        /* Overlay blocks everything */
+        .ai-modal-spinner {
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 20;
+            backdrop-filter: blur(1.5px);
+            pointer-events: auto; /* blocks modal */
+        }
 
-                <div class="container about-60-container">
+        /* Spinner itself should NOT intercept clicks */
+        .ai-modal-spinner * {
+            pointer-events: none;
+        }
+
+        /* Close button MUST be above overlay */
+        .ai-close {
+            align-self: flex-start;
+            margin-right: auto; /* push left */
+            margin-left: 0;
+            z-index: 30;
+        }
 
 
+        /* Spinner styling */
+        .ai-spinner {
+            width: 42px;
+            height: 42px;
+            border: 4px solid rgba(0,0,0,0.25);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: aiSpin 0.9s linear infinite;
+        }
 
-                    <!-- Left Image -->
+        @keyframes aiSpin {
+            to { transform: rotate(360deg); }
+        }
 
-                    <div class="col-md-6 about-60-img-wrapper anim-slide-left">
+    </style></head>
+<body class="theme-1" style="">
+<div class="" id="wrapper" style="pointer-events: auto;">
+<div class="" data-src="header.html" id="header"></div>
+<div class="" id="mainPageContent">
+<section class="section-wrapper about-60" id="section-8wp0uz7i1k6">
+<div class="container about-60-container">
+<!-- Left Image -->
+<div class="col-md-6 about-60-img-wrapper anim-slide-left in-view">
+<img alt="Advocate Image" class="updateImg" data-original-src="assets/images/about-60.jpg" src="assets/images/about-60.jpg"/>
+</div>
+<!-- Right Content -->
+<div class="col-md-6 about-60-content anim-slide-right in-view">
+<h2 class="about-60-title">
 
-                        <img src="assets/images/about-60.jpg" alt="Advocate Image">
-
-                    </div>
-
-
-
-                    <!-- Right Content -->
-
-                    <div class="col-md-6 about-60-content anim-slide-right">
-
-                        <h2 class="about-60-title">
-
-                            With over 25 years of insulated‑water expertise,<br>
+                            With over 25 years of insulated‑water expertise,<br class=""/>
 
                             we engineer robust insulated‑water campers
 
-                            for your demanding applications
-
-                        </h2>
-
-
-
-                        <p class="about-60-desc">
+                            for your demanding applications...</h2>
+<p class="about-60-desc">
 
                             Since 1999, our company has been dedicated to delivering accessible,
 
@@ -90,51 +114,28 @@
                             product reliability with integrity, precision, and unwavering commitment.
 
                         </p>
+</div>
+</div>
+</section>
+<section class="home-81 section-wrapper" id="section-nv1wdzip7mc">
+<div class="container">
+<div class="row align-items-center">
+<!-- Left Image -->
+<div class="col-md-6">
+<div class="home-81 image-box anim-cube-rotate">
+<img alt="Interior Design Space" class="img-responsive updateImg" data-original-src="assets/images/home-81-1.jpeg" src="assets/images/home-81-1.jpeg"/>
+</div>
+</div>
+<!-- Right Content -->
+<div class="col-md-6 home-81 content-box anim-depth-pop">
+<h2 class="">
 
-
-
-
-                    </div>
-
-
-
-                </div>
-
-            </section>
-            <section class="home-81 section-wrapper">
-
-                <div class="container">
-
-                    <div class="row align-items-center">
-
-                        <!-- Left Image -->
-
-                        <div class="col-md-6">
-
-                            <div class="home-81 image-box anim-cube-rotate">
-
-                                <img src="assets/images/home-81-1.jpeg" alt="Interior Design Space"
-                                    class="img-responsive">
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- Right Content -->
-
-                        <div class="col-md-6 home-81 content-box anim-depth-pop">
-
-                            <h2>
-
-                                Elevate Your <span>Adventure</span> with Precision<br>
+                                Elevate Your <span class="">Adventure</span> with Precision<br class=""/>
 
                                 Insulated Water Campers.
 
                             </h2>
-
-                            <p>
+<p class="">
 
                                 We engineer insulated water campers that merge durability with performance. Our
 
@@ -149,433 +150,245 @@
                                 safety, efficiency, and comfort standards.
 
                             </p>
-
-                            <button class="home-81 btn-red">View Our Campers</button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-            <section class="section-wrapper home-50"
-                style="background-image: url('assets/images/home-50-bg.jpg'); /* Replace with actual image */">
-
-                <div class="home-50-overlay">
-
-                    <div class="container">
-
-                        <div class="row">
-
-                            <div class="col-md-4 col-sm-12">
-
-                                <p class="home-50-subtitle">WHY CHOOSE US</p>
-
-                                <h2 class="home-50-title">Discover our<br>extensive<br>product portfolio</h2>
-
-                            </div>
-
-                            <div class="col-md-8 col-sm-12">
-
-                                <div class="row home-50-links">
-
-                                    <div class="col-sm-4 col-xs-6">
-
-                                        <p>Camper Shells</p>
-
-                                        <p>Water Systems</p>
-
-                                        <p>Chassis Design</p>
-
-                                    </div>
-
-                                    <div class="col-sm-4 col-xs-6">
-
-                                        <p>Heat Retention</p>
-
-                                        <p>Hydration Units</p>
-
-                                        <p>Solar Integration</p>
-
-                                    </div>
-
-                                    <div class="col-sm-4 col-xs-6">
-
-                                        <p>Insulation Panels</p>
-
-                                        <p>Custom Fixtures</p>
-
-                                        <p>Quality Assurance</p>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-            <section class="section-wrapper home-73">
-
-                <div class="container">
-
-                    <div class="row">
-
-
-
-                        <!-- Card 1 -->
-
-                        <div class="col-sm-6 col-md-3">
-
-                            <div class="home-73 card" style="background-image: url('assets/images/home-73-1.jpeg');">
-
-                                <div class="default-text">Thermal Module</div>
-
-                                <div class="overlay" style="bottom: -100%; opacity: 0;">
-
-                                    <h3>Thermal Module</h3>
-
-                                    <p>Specifications</p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- Card 2 -->
-
-                        <div class="col-sm-6 col-md-3">
-
-                            <div class="home-73 card" style="background-image: url('assets/images/home-73-2.jpeg');">
-
-                                <div class="default-text">Production Volume</div>
-
-                                <div class="overlay" style="bottom: -100%; opacity: 0;">
-
-                                    <h3>02. Production Volume</h3>
-
-                                    <p>Our Expertise</p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- Card 3 -->
-
-                        <div class="col-sm-6 col-md-3">
-
-                            <div class="home-73 card" style="background-image: url('assets/images/home-73-3.jpeg');">
-
-                                <div class="default-text">R&amp;D Innovation</div>
-
-                                <div class="overlay" style="bottom: -100%; opacity: 0;">
-
-                                    <h3>R&amp;D Innovation</h3>
-
-                                    <p>Read Details</p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- Card 4 -->
-
-                        <div class="col-sm-6 col-md-3">
-
-                            <div class="home-73 card" style="background-image: url('assets/images/home-73-4.jpeg');">
-
-                                <div class="default-text">Supply Chain</div>
-
-                                <div class="overlay" style="bottom: -100%; opacity: 0;">
-
-                                    <h3>Supply Chain</h3>
-
-                                    <p>Discover</p>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-
-                    </div>
-
-                </div>
-
-            </section>
-            <section class="section-wrapper newsletter-6">
-
-                <div class="newsletter-6-overlay">
-
-                    <div class="container newsletter-6-container">
-
-                        <div class="row newsletter-6-row">
-
-
-
-                            <!-- Left Content -->
-
-                            <div class="col-md-6 col-sm-12 newsletter-6-content anim-slide-right">
-
-                                <h2 class="newsletter-6-title">
-
-                                    Get Latest Insulated Water Camper Updates<br>
+<button class="home-81 btn-red">View Our Campers</button>
+</div>
+</div>
+</div>
+</section>
+<section class="section-wrapper home-50 updateImg" data-original-src="assets/images/home-50-bg.jpg" id="section-3a4kb0kwbuq" style='background: url("assets/images/home-50-bg.jpg"); /* Replace with actual image */'>
+<div class="home-50-overlay">
+<div class="container">
+<div class="row">
+<div class="col-md-4 col-sm-12">
+<p class="home-50-subtitle">WHY CHOOSE US</p>
+<h2 class="home-50-title">Discover our<br class=""/>extensive<br class=""/>product portfolio</h2>
+</div>
+<div class="col-md-8 col-sm-12">
+<div class="row home-50-links">
+<div class="col-sm-4 col-xs-6">
+<p class="">Camper Shells</p>
+<p class="">Water Systems</p>
+<p class="">Chassis Design</p>
+</div>
+<div class="col-sm-4 col-xs-6">
+<p class="">Heat Retention</p>
+<p class="">Hydration Units</p>
+<p class="">Solar Integration</p>
+</div>
+<div class="col-sm-4 col-xs-6">
+<p class="">Insulation Panels</p>
+<p class="">Custom Fixtures</p>
+<p class="">Quality Assurance</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section-wrapper home-73" id="section-2udgcmrg9tc">
+<div class="container">
+<div class="row">
+<!-- Card 1 -->
+<div class="col-sm-6 col-md-3">
+<div class="home-73 card updateImg" data-original-src="assets/images/home-73-1.jpeg" style='background: url("assets/images/home-73-1.jpeg");'>
+<div class="default-text">Thermal Module</div>
+<div class="overlay" style="bottom: -100%; opacity: 0;">
+<h3 class="">Thermal Module</h3>
+<p class="">Specifications</p>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="col-sm-6 col-md-3">
+<div class="home-73 card updateImg" data-original-src="assets/images/home-73-2.jpeg" style='background: url("assets/images/home-73-2.jpeg");'>
+<div class="default-text">Production Volume</div>
+<div class="overlay" style="bottom: -100%; opacity: 0;">
+<h3 class="">02. Production Volume</h3>
+<p class="">Our Expertise</p>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="col-sm-6 col-md-3">
+<div class="home-73 card updateImg" data-original-src="assets/images/home-73-3.jpeg" style='background: url("assets/images/home-73-3.jpeg");'>
+<div class="default-text">R&amp;D Innovation</div>
+<div class="overlay" style="bottom: -100%; opacity: 0;">
+<h3 class="">R&amp;D Innovation</h3>
+<p class="">Read Details</p>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="col-sm-6 col-md-3">
+<div class="home-73 card updateImg" data-original-src="assets/images/home-73-4.jpeg" style='background: url("assets/images/home-73-4.jpeg");'>
+<div class="default-text">Supply Chain</div>
+<div class="overlay" style="bottom: -100%; opacity: 0;">
+<h3 class="">Supply Chain</h3>
+<p class="">Discover</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section-wrapper newsletter-6" id="section-z6m4nct2x79">
+<div class="newsletter-6-overlay">
+<div class="container newsletter-6-container">
+<div class="row newsletter-6-row">
+<!-- Left Content -->
+<div class="col-md-6 col-sm-12 newsletter-6-content anim-slide-right">
+<h2 class="newsletter-6-title">
+
+                                    Get Latest Insulated Water Camper Updates<br class=""/>
 
                                     &amp; Premium Manufacturing Trends
 
                                 </h2>
-
-                                <p class="newsletter-6-subtitle">
+<p class="newsletter-6-subtitle">
 
                                     Subscribe to receive exclusive insulated water camper designs, engineering insights,
 
                                     product launches &amp; performance tips.
 
                                 </p>
-
-
-
-                                <button class="newsletter-6-btn">
-
-                                    <i class="bi bi-bell-fill"></i> Subscribe
+<button class="newsletter-6-btn">
+<i class="bi bi-bell-fill"></i> Subscribe
 
                                 </button>
+</div>
+<!-- Right Form -->
+<div class="col-md-6 col-sm-12 newsletter-6-form-wrapper anim-slide-left">
+<form class="newsletter-6-form">
+<input class="newsletter-6-input" placeholder="Enter your email address" type="email"/>
+<i class="bi bi-envelope-heart newsletter-6-input-icon"></i>
+</form>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section-wrapper news-6" id="section-lc70r99et2a">
+<div class="container">
+<div class="news-6 section-title">
+<h6 class="">Industry Updates</h6>
+<h2 class="">Featured Insights &amp; Guidance</h2>
+</div>
+<div class="row">
+<!-- Card 1 -->
+<div class="col-sm-4">
+<div class="news-6 news-card">
+<img alt="news-1" class="updateImg" data-original-src="assets/images/news-6-1.jpg" src="assets/images/news-6-1.jpg"/>
+<div class="news-6 news-meta">
+<div class="news-6 news-date">
+<span class="">30</span>
+<small class="">AUG</small>
+</div>
+<div class="news-6 news-icons">
+<i class="ri-message-2-line"></i> 0 Feedback
 
-                            </div>
-
-
-
-                            <!-- Right Form -->
-
-                            <div class="col-md-6 col-sm-12 newsletter-6-form-wrapper anim-slide-left">
-
-                                <form class="newsletter-6-form">
-
-                                    <input type="email" class="newsletter-6-input"
-                                        placeholder="Enter your email address">
-
-                                    <i class="bi bi-envelope-heart newsletter-6-input-icon"></i>
-
-                                </form>
-
-                            </div>
-
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-            <section class="section-wrapper news-6">
-
-                <div class="container">
-
-                    <div class="news-6 section-title">
-
-                        <h6>Industry Updates</h6>
-
-                        <h2>Featured Insights &amp; Guidance</h2>
-
-                    </div>
-
-                    <div class="row">
-
-                        <!-- Card 1 -->
-
-                        <div class="col-sm-4">
-
-                            <div class="news-6 news-card">
-
-                                <img src="assets/images/news-6-1.jpg" alt="news-1">
-
-                                <div class="news-6 news-meta">
-
-                                    <div class="news-6 news-date">
-
-                                        <span>30</span>
-
-                                        <small>AUG</small>
-
-                                    </div>
-
-                                    <div class="news-6 news-icons">
-
-                                        <i class="ri-message-2-line"></i> 0 Feedback
-
-                                        &nbsp;&nbsp;
+                                          
 
                                         <i class="ri-user-line"></i> Owner
 
                                     </div>
-
-                                    <div class="news-6 news-title">Advanced Insulated Water Camper Design</div>
-
-                                    <div class="news-6 news-description">
+<div class="news-6 news-title">Advanced Insulated Water Camper Design</div>
+<div class="news-6 news-description">
 
                                         Our engineering team delivers reliable insulated water camper systems that meet
                                         rigorous performance standards and enhance field durability.
 
                                     </div>
+<a class="news-6 read-more" href="#" style="cursor: pointer;">Read More</a>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="col-sm-4">
+<div class="news-6 news-card">
+<img alt="news-2" class="updateImg" data-original-src="assets/images/news-6-2.jpg" src="assets/images/news-6-2.jpg"/>
+<div class="news-6 news-meta">
+<div class="news-6 news-date">
+<span class="">30</span>
+<small class="">AUG</small>
+</div>
+<div class="news-6 news-icons">
+<i class="ri-message-2-line"></i> 0 Feedback
 
-                                    <a href="#" class="news-6 read-more">Read More</a>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <!-- Card 2 -->
-
-                        <div class="col-sm-4">
-
-                            <div class="news-6 news-card">
-
-                                <img src="assets/images/news-6-2.jpg" alt="news-2">
-
-                                <div class="news-6 news-meta">
-
-                                    <div class="news-6 news-date">
-
-                                        <span>30</span>
-
-                                        <small>AUG</small>
-
-                                    </div>
-
-                                    <div class="news-6 news-icons">
-
-                                        <i class="ri-message-2-line"></i> 0 Feedback
-
-                                        &nbsp;&nbsp;
+                                          
 
                                         <i class="ri-user-line"></i> Owner
 
                                     </div>
-
-                                    <div class="news-6 news-title">Optimizing Thermal Retention for Mobile Campers</div>
-
-                                    <div class="news-6 news-description">
+<div class="news-6 news-title">Optimizing Thermal Retention for Mobile Campers</div>
+<div class="news-6 news-description">
 
                                         Our engineering team delivers reliable insulated water camper systems that meet
                                         rigorous performance standards and enhance field durability.
 
                                     </div>
+<a class="news-6 read-more" href="#" style="cursor: pointer;">Read More</a>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="col-sm-4">
+<div class="news-6 news-card">
+<img alt="news-3" class="updateImg" data-original-src="assets/images/news-6-3.jpg" src="assets/images/news-6-3.jpg"/>
+<div class="news-6 news-meta">
+<div class="news-6 news-date">
+<span class="">30</span>
+<small class="">AUG</small>
+</div>
+<div class="news-6 news-icons">
+<i class="ri-message-2-line"></i> 0 Feedback
 
-                                    <a href="#" class="news-6 read-more">Read More</a>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <!-- Card 3 -->
-
-                        <div class="col-sm-4">
-
-                            <div class="news-6 news-card">
-
-                                <img src="assets/images/news-6-3.jpg" alt="news-3">
-
-                                <div class="news-6 news-meta">
-
-                                    <div class="news-6 news-date">
-
-                                        <span>30</span>
-
-                                        <small>AUG</small>
-
-                                    </div>
-
-                                    <div class="news-6 news-icons">
-
-                                        <i class="ri-message-2-line"></i> 0 Feedback
-
-                                        &nbsp;&nbsp;
+                                          
 
                                         <i class="ri-user-line"></i> Owner
 
                                     </div>
-
-                                    <div class="news-6 news-title">Engineering Excellence in Insulated Water Campers
+<div class="news-6 news-title">Engineering Excellence in Insulated Water Campers
                                     </div>
-
-                                    <div class="news-6 news-description">
+<div class="news-6 news-description">
 
                                         Our engineering team delivers reliable insulated water camper systems that meet
                                         rigorous performance standards and enhance field durability.
 
                                     </div>
-
-                                    <a href="#" class="news-6 read-more">Read More</a>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-        </div>
-
-        <div id="footer" data-src="footer.html"></div>
-
-    </div>
-
-    <a class="whatsapp-float" href="https://wa.me/9074787379" target="_blank">
-        <i class="ri-whatsapp-line"></i>
-    </a>
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/middle-section.js"></script>
-    <script src="assets/js/init.js"></script>
-    <script src="assets/js/plugins.js"></script>
-    <script src="assets/js/jquery.main.js"></script>
-    <script src="assets/js/gsap.min.js"></script>
-    <script src="assets/js/ScrollTrigger.min.js"></script>
-    <script src="assets/js/Observer.min.js"></script>
-    <script src="assets/js/gsap.effects.js"></script>
-    <script src="assets/js/common_js/send_email.js"></script>
-
-    <script src="assets/js/common_js/html_image_editor.js"></script>
-    <script src="assets/js/common_js/windows_postmessage.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-    <script>
+<a class="news-6 read-more" href="#" style="cursor: pointer;">Read More</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="" data-src="footer.html" id="footer"></div>
+</div>
+<a class="whatsapp-float" href="https://wa.me/9074787379" style="cursor: pointer;" target="_blank">
+<i class="ri-whatsapp-line"></i>
+</a>
+<script src="assets/js/jquery.js"></script>
+<script src="assets/js/middle-section.js"></script>
+<script src="assets/js/init.js"></script>
+<script src="assets/js/plugins.js"></script>
+<script src="assets/js/jquery.main.js"></script>
+<script src="assets/js/gsap.min.js"></script>
+<script src="assets/js/ScrollTrigger.min.js"></script>
+<script src="assets/js/Observer.min.js"></script>
+<script src="assets/js/gsap.effects.js"></script>
+<script src="assets/js/common_js/send_email.js"></script>
+<script src="assets/js/common_js/html_image_editor.js"></script>
+<script src="assets/js/common_js/windows_postmessage.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
         $(function () {
 
             /* Start code to load js and css files properly on local server or production server: NOte: this is the workwround, need to fix this */
-            loadHeaderFooter("header", "client-assets/lyr113903/lyr113903/header.html");
-            loadHeaderFooter("footer", "client-assets/lyr113903/lyr113903/footer.html");
+            // loadHeaderFooter("header", "client-assets/lyr113903/lyr113903/header.html");
+            // loadHeaderFooter("footer", "client-assets/lyr113903/lyr113903/footer.html");
             /*  End code */
 
 
@@ -621,8 +434,5 @@
 
         });
     </script>
-    <script src="assets/js/common_js/image_uploader.js"></script>
-
+<script src="assets/js/common_js/image_uploader.js"></script>
 </body>
-
-</html>
