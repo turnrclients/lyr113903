@@ -294,7 +294,9 @@ sectionClone.find('.company_name').contents().filter(function () {
             :root {
                 --site-font: ${headerFont};
             }
-            body, #wrapper, #wrapper * {
+            body,
+            #wrapper,
+            #wrapper *:not(i):not([class^="ri-"]):not([class*=" ri-"]) {
                 font-family: var(--site-font) !important;
             }
         </style>
@@ -441,7 +443,9 @@ sectionClone.find('.company_name').contents().filter(function () {
             :root {
                 --site-font: ${headerFont};
             }
-            body, #wrapper, #wrapper * {
+            body,
+            #wrapper,
+            #wrapper *:not(i):not([class^="ri-"]):not([class*=" ri-"]) {
                 font-family: var(--site-font) !important;
             }
         </style>

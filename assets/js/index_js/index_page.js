@@ -27,8 +27,11 @@ let isOriginalImageChanged = false;
 
 // //
 
-function loadSavedSections(){
-    var ai_sections = getCookie("middle_AI_generated_sections")
+function loadSavedSections(reqSrc){
+
+    cookieStr = (reqSrc!=undefined && reqSrc== "headerAndFooterAIGeneratedSections") ? "header_footer_AI_generated_sections" : "middle_AI_generated_sections"
+    var ai_sections = getCookie(cookieStr);
+    //var ai_sections = getCookie("middle_AI_generated_sections")
     ai_sections_str="";
     if (ai_sections!=null && ai_sections!= undefined) {
         var ai_sections_arr = JSON.parse(ai_sections)
@@ -39,7 +42,7 @@ function loadSavedSections(){
         console.warn("No AI sections found in cookie");
         return;
     }
-    fetch(`/ai/get_saved_sections?client=${getCookie("clientName")}&project=${getCookie("projectName")}&ai_generated_sections=${ai_sections_str}`)
+    fetch(`/ai/get_saved_sections?client=${getCookie("clientName")}&project=${getCookie("projectName")}&ai_generated_sections=${ai_sections_str}&reqSrc=${reqSrc}`)
     .then(res => res.json())
     .then(data => {
 
@@ -80,15 +83,30 @@ function loadSavedSections(){
 
             //
             aiWrapper.hide();
-            container.find("section").first().show();
+            container.children("section, footer, div").first().show();
 
             //  SHOW TOGGLE (UI ONLY)
-            container.find(".ai-toggle").show();
+           container.find(".ai-toggle").show();
 
-            const aiCheckbox = container.find(".ai-version-checkbox");
+const aiCheckbox = container.find(".ai-version-checkbox");
 
+// restore AI state
+const savedHF = JSON.parse(getCookie("globalHeader") || "{}");
+const savedFooter = JSON.parse(getCookie("globalFooter") || "{}");
+
+const isHeaderMatch = savedHF.id === sectionId && savedHF.isAI;
+const isFooterMatch = savedFooter.id === sectionId && savedFooter.isAI;
+
+setTimeout(() => {
+    if (isHeaderMatch || isFooterMatch) {
+        aiCheckbox.prop("checked", true).trigger("change");
+    } else {
+        aiWrapper.hide();
+        container.children("section, footer, div").first().show();
+    }
+}, 50);
             //  RESET ONLY (NO SIDE EFFECT)
-            aiCheckbox.prop("checked", false);
+            // aiCheckbox.prop("checked", false);
             //  REMOVE THIS (VERY IMPORTANT)
             // aiCheckbox.trigger("change");
 // alert(ai_sections_str);
@@ -180,7 +198,9 @@ style.innerHTML = `
 .ai-tab-content{
     width:100%;
 }
-
+.ai-body .navbar{
+    position:absolute!important;
+}
 .website-builder .ai-tab-content{
   overflow:hidden;
 }
@@ -246,6 +266,20 @@ background: linear-gradient(90deg, #F28F32 0%, #a73729 100%);
   font-weight: 500;
   margin-left: 16px;
   font-size: 18px;
+}
+
+.generate-btn:disabled {
+  background: linear-gradient(90deg, #d3d3d3 0%, #b5b5b5 100%);
+  color: #777;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+  .generate-btn:disabled,
+.generate-btn:disabled:hover {
+  background: linear-gradient(90deg, #d3d3d3 0%, #b5b5b5 100%);
+  color: #777;
+  cursor: not-allowed;
+  opacity: 0.8;
 }
   .generate-btn:hover{
   background: linear-gradient(90deg, #a73729 0%, #F28F32 100%);
@@ -629,6 +663,15 @@ if(isGeneratedActive){
 
 const selectedCategory = getCookie("selectedCategory") || "" ;
     try {
+        const isHeader = currentSection.toLowerCase().includes("header");
+        const isFooter = currentSection.toLowerCase().includes("footer");
+        let srcType = "";
+        if (isHeader || isFooter) {
+        srcType = "hf";
+        }
+        console.log("Section:", currentSection);
+        console.log("isHeader:", isHeader);
+        console.log("isFooter:", isFooter);
         const response = await fetch("/ai/generate/", {
             method: "POST",
             headers: {
@@ -639,6 +682,7 @@ const selectedCategory = getCookie("selectedCategory") || "" ;
                 html: htmlContent,
                 sectionId: currentSection,
                 categoryName: selectedCategory,
+                src: srcType
             })
         });
 
@@ -687,43 +731,36 @@ function getSectionType(sectionId){
 }
 document.getElementById("ai-apply").onclick = async function(){
 
-const isGeneratedActive = $('[data-tab="generated"]').hasClass("active");
-
-let sourceContainer = isGeneratedActive ? $("#ai-generated") : $("#ai-original");
-
-let generatedHTML = sourceContainer.html();
-
+    const isGeneratedActive = $('[data-tab="generated"]').hasClass("active");
+    let sourceContainer = isGeneratedActive ? $("#ai-generated") : $("#ai-original");
+    let generatedHTML = sourceContainer.html();
 
     modal.style.display = "none";
+
     addAIgeneratedsectionsincookies(currentSection);
 
     const generatedContainer = sourceContainer;
+    resetImageEditMode(generatedContainer);
 
-resetImageEditMode(generatedContainer);
+    let imagesData = [];
 
+    for (let img of generatedContainer.find("img")) {
+        let src = $(img).attr("src");
 
-let imagesData = [];
+        try {
+            let base64 = await toDataURL(src);
 
-for (let img of generatedContainer.find("img")) {
-    let src = $(img).attr("src");
+            imagesData.push({
+                name: src.split("/").pop().split("?")[0],
+                data: base64
+            });
 
-    try {
-        let base64 = await toDataURL(src);
-
-        imagesData.push({
-            name: src.split("/").pop().split("?")[0],
-            data: base64
-        });
-
-    } catch (e) {
-        console.error("Image convert failed:", src);
+        } catch (e) {
+            console.error("Image convert failed:", src);
+        }
     }
-}
 
-console.log("Images Data:", imagesData);
-
-
-    const container = $("#"+currentSection);
+    const container = $("#" + currentSection);
 
     let aiWrapper = container.find(".ai-generated-wrapper");
 
@@ -734,66 +771,53 @@ console.log("Images Data:", imagesData);
 
     aiWrapper.html(generatedHTML);
 
-    // show toggle controls
     container.find(".ai-toggle").show();
 
-    const originalCheckbox = $("#"+currentSection+"_component");
+    const originalCheckbox = $("#" + currentSection + "_component");
     const aiCheckbox = container.find(".ai-version-checkbox");
 
-    // enforce radio behaviour
     aiCheckbox.prop("checked", true);
     originalCheckbox.prop("checked", false);
 
-    // add section entry to cookies
-    originalCheckbox.prop("checked", true);
+    toggleGenerateButton(currentSection);
+    container.attr("data-ai-selected", "true");
 
-
-    // show AI section
     aiWrapper.show();
-    container.find("section").first().hide();
+    container.children("section, footer, div").first().hide();
 
-    // uncheck original visually
-    originalCheckbox.prop("checked", false);
-
-
-    console.log(" currentSection:", currentSection);
-    console.log(" sectionFileMap:", sectionFileMap);
+    handleSectionSelection(originalCheckbox);
 
     try{
-const firstImage = imagesData[0] || {};
 
-const formData = new FormData();
-// alert("4652467");
-generatedHTML = getCleanHTML(sourceContainer);
-// alert("Save section---"+generatedHTML)
+        const formData = new FormData();
 
-formData.append("sectionId", currentSection);
-formData.append("html", generatedHTML);
-formData.append("client", getCookie("clientName"));
-formData.append("project", getCookie("projectName"));
+        generatedHTML = getCleanHTML(sourceContainer);
 
-// formData.append("ai_generated_image", firstImage.name || "");
-// formData.append("images", firstImage.data || "");
+        formData.append("sectionId", currentSection);
+        formData.append("html", generatedHTML);
+        formData.append("client", getCookie("clientName"));
+        formData.append("project", getCookie("projectName"));
 
-const res = await fetch("/ai/save_section/", {
-    method: "POST",
-    headers: {
-        "X-CSRFToken": getCookie("csrftoken")
-    },
-    body: formData
-});
+        const res = await fetch("/ai/save_section/", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            },
+            body: formData
+        });
 
-    const response = await res.json();
-    console.log('response: ', response)
+        const response = await res.json();
+        aiWrapper.attr("data-template", response.file);
 
+        sectionFileMap[currentSection] = {
+            ...sectionFileMap[currentSection],
+            final: response.file
+        };
 
-    console.log('response.file: ', response.file)
-    aiWrapper.attr("data-template", response.file);
-    sectionFileMap[currentSection] = {
-        ...sectionFileMap[currentSection],
-        final: response.file
-    };
-updateSectionTemplate(currentSection, true);
+        updateSectionTemplate(currentSection, true);
+
+        setGlobalVariablesInLocalStorage(currentSection);
+
     }catch(err){
         console.error("Save failed:", err);
     }
@@ -804,12 +828,38 @@ updateSectionTemplate(currentSection, true);
 };
 
 function addAIgeneratedsectionsincookies(sectionId){
-    let list = JSON.parse(getCookie("middle_AI_generated_sections") || "[]");
 
-    if(!list.includes(sectionId)){
-        list.push(sectionId);
-        document.cookie = "middle_AI_generated_sections=" + JSON.stringify(list) + "; path=/";
+    const child = document.querySelector('#' + sectionId);
+    const parent = child.parentElement;
+    parnetTagCLassName = parent.className;
+
+    if(parnetTagCLassName!=undefined) {
+        if(parnetTagCLassName.includes("header") || parnetTagCLassName.includes("footer")) {
+            let listhf = JSON.parse(getCookie("header_footer_AI_generated_sections") || "[]");
+
+            sectionTypeStr =  parnetTagCLassName.includes("header") ? "header:" : "footer:";
+
+            let index = listhf.findIndex(item => item.startsWith(sectionTypeStr));
+
+            if (index !== -1) {
+                listhf[index] = sectionTypeStr + sectionId;
+            } else {
+                listhf.push(sectionTypeStr + sectionId);
+            }
+            document.cookie = "header_footer_AI_generated_sections=" + JSON.stringify(listhf) + "; path=/";
+
+        }  else if (parnetTagCLassName.includes("middle") ) {
+            let list = JSON.parse(getCookie("middle_AI_generated_sections") || "[]");
+
+            if(!list.includes(sectionId)){
+                list.push(sectionId);
+                document.cookie = "middle_AI_generated_sections=" + JSON.stringify(list) + "; path=/";
+            }
+        }
     }
+
+
+
 }
 
 
@@ -876,12 +926,12 @@ function generateContent(sectionId){
 
     if(!originalSectionMap[sectionId]){
 
-        const originalSection = container.querySelector("section");
+        let cloned = container.cloneNode(true);
 
-        if(originalSection){
-            originalSectionMap[sectionId] = originalSection.outerHTML;
-        }
+        // remove builder UI
+        $(cloned).find(".radio-holder").remove();
 
+        originalSectionMap[sectionId] = cloned.innerHTML;
     }
 
     const originalHTML = originalSectionMap[sectionId] || "";
@@ -981,26 +1031,15 @@ $(document).on("change",".ai-version-checkbox",function(){
 
     if($(this).is(":checked")){
 
-        // uncheck original
         originalCheckbox.prop("checked", false);
 
-        // show AI
-        container.find("section").first().hide();
+        container.children("section, footer, div").first().hide();
         container.find(".ai-generated-wrapper").show();
-
-        // store section
-if($(this).is(":checked")){
-    container.find("section").first().hide();
-    container.find(".ai-generated-wrapper").show();
-} else {
-    container.find(".ai-generated-wrapper").hide();
-    container.find("section").first().show();
-}
 
     }else{
 
         container.find(".ai-generated-wrapper").hide();
-        container.find("section").first().show();
+        container.children("section, footer, div").first().show();
 
     }
 
@@ -1014,7 +1053,7 @@ $(document).on("change",".section-checkbox",function(){
     container.find(".ai-version-checkbox").prop("checked",false);
 
     container.find(".ai-generated-wrapper").hide();
-    container.find("section").first().show();
+    container.children("section, footer, div").first().show();
 
 });
 
@@ -1024,14 +1063,31 @@ $(document).on("change",".section-checkbox",function(){
 // -----------------------------
 // EDITING IMAGE
 // -----------------------------
+let allImageElements = [];
+let imageMetaMap = new Map();
+
 $("#edit-images").on("click", function () {
 
     const isGeneratedActive = $('[data-tab="generated"]').hasClass("active");
+    const container = isGeneratedActive ? $("#ai-generated") : $("#ai-original");
 
-const container = isGeneratedActive ? $("#ai-generated") : $("#ai-original");
-    const images = container.find("img");
+    // store original background
+    container.find("*").each(function () {
+        const bg = $(this).css("background-image");
+        if (bg && bg !== "none") {
+            $(this).attr("data-original-bg", bg);
+        }
+    });
 
-    images.each(function () {
+    allImageElements = [];
+
+    container.find("img").each(function () {
+
+        allImageElements.push({
+            type: "img",
+            el: this,
+            src: $(this).attr("src")
+        });
 
         $(this).css({
             outline: "2px dashed #ff5c5c",
@@ -1039,13 +1095,60 @@ const container = isGeneratedActive ? $("#ai-generated") : $("#ai-original");
             border: "5px solid red"
         });
 
-        $(this).off("click").on("click", function (e) {
+        $(this).off("click.imageEdit").on("click.imageEdit", function (e) {
             e.preventDefault();
             e.stopPropagation();
+            currentEditingImg = this;
             openImagePicker(this);
-
         });
 
+    });
+
+    container.find("*").each(function () {
+
+        const el = this;
+        const bg = window.getComputedStyle(el).backgroundImage;
+
+        if (bg && bg !== "none" && !bg.includes("gradient")) {
+
+            const match = bg.match(/url\(["']?(.*?)["']?\)/);
+
+            if (match && match[1]) {
+
+                allImageElements.push({
+                    type: "background",
+                    el: el,
+                    src: match[1]
+                });
+
+                $(el).css({
+                    outline: "2px dashed blue",
+                    cursor: "pointer"
+                });
+
+                $(this).off("click.imageEdit").on("click.imageEdit", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    currentEditingImg = this;
+                    openImagePicker(this);
+                });
+
+            }
+        }
+
+    });
+
+    imageMetaMap = new Map();
+
+    allImageElements.forEach(item => {
+        const rect = item.el.getBoundingClientRect();
+
+        imageMetaMap.set(item.el, {
+            width: rect.width,
+            height: rect.height,
+            aspectRatio: rect.width / rect.height,
+            originalSrc: item.src
+        });
     });
 
 });
@@ -1064,9 +1167,7 @@ function openImagePicker(targetImg) {
 
         const modal = $(`
         <div id="imagePickerModal" class="image-picker-modal">
-
             <div class="image-picker-box">
-
                 <div class="modal-header">
                     <button class="close" data-dismiss="modal">&times;</button>
                     <h4>Select Image</h4>
@@ -1075,9 +1176,7 @@ function openImagePicker(targetImg) {
                 <div class="modal-body">
 
                     <div class="image-picker-tabs">
-                        <!-- <button class="tab-btn" data-tab="assets">Assets</button> -->
-                        <button class="tab-btn active" data-tab="pexels">Pexels</button>
-                        <button class="tab-btn" data-tab="pixabay">Pixabay</button>
+                        <button class="tab-btn" data-tab="pexels">Pexels</button>
                         <button class="tab-btn" data-tab="upload">Upload</button>
                         <button class="tab-btn" data-tab="url">URL</button>
                     </div>
@@ -1094,9 +1193,7 @@ function openImagePicker(targetImg) {
                     <button class="btn btn-default" id="cancelImage">Cancel</button>
                     <button class="btn website-info-btn-primary" id="confirmImage">Apply</button>
                 </div>
-
             </div>
-
         </div>
         `);
 
@@ -1105,9 +1202,15 @@ function openImagePicker(targetImg) {
 
     $("#imagePickerModal").css("display", "flex");
 
+    // FIX: always reset to Pexels
+    $(".tab-btn").removeClass("active");
+    $('.tab-btn[data-tab="pexels"]').addClass("active");
+
+    selectedImageSrc = null;
+    selectedFile = null;
+
     loadPexels();
 }
-
 
 // -----------------------------
 // TAB SWITCH
@@ -1392,96 +1495,167 @@ async function toDataURL(src) {
 }
 
 let ai_generated_image = "";
-
 $(document).on("click", "#confirmImage", async function () {
 
-    if (!selectedImageSrc) return;
+    if (!selectedImageSrc || !currentEditingImg) return;
 
-    let $img = $(currentEditingImg);
+    const $el = $(currentEditingImg);
 
-    let originalName = $img.attr("data-original-name");
-    var oldSrc = "";
+    let item = null;
+    for (let i of allImageElements) {
+        if (i.el === currentEditingImg) {
+            item = i;
+            break;
+        }
+    }
+
+    if (!item) {
+        item = {
+            type: currentEditingImg.tagName === "IMG" ? "img" : "background",
+            el: currentEditingImg
+        };
+    }
+
+    let oldSrc = "";
+
+    if (item.type === "img") {
+        oldSrc = $el.attr("src") || "";
+    } else {
+        const bg = window.getComputedStyle(currentEditingImg).backgroundImage;
+        const match = bg.match(/url\(["']?(.*?)["']?\)/);
+        oldSrc = match ? match[1] : "";
+    }
+
+    let originalName = $el.attr("data-original-name");
     if (!originalName) {
-        oldSrc = $img.attr("src") || "";
-        let oldName = oldSrc.split("/").pop().split("?")[0];
+        let oldName = oldSrc.split("/").pop().split("?")[0] || "image";
         originalName = oldName.split(".")[0];
-
-        $img.attr("data-original-name", originalName);
+        $el.attr("data-original-name", originalName);
     }
 
     try {
         selectedImageSrc = await toDataURL(selectedImageSrc);
     } catch (e) {
-        console.error(e);
         return;
     }
 
     let ext = "png";
-    // alert("old image Src" + oldSrc );
-if (selectedImageSrc.includes("image/jpeg")) ext = "jpg";
-if (selectedImageSrc.includes("image/webp")) ext = "webp";
-    if (!ext || ext.length > 5) ext = "png";
+    if (selectedImageSrc.includes("image/jpeg")) ext = "jpg";
+    if (selectedImageSrc.includes("image/webp")) ext = "webp";
 
     let newImageName = originalName + "." + ext;
 
-// store original FIRST
-let originalSrc = $img.attr("data-original-src");
+    if (!$el.attr("data-original-src")) {
+        $el.attr("data-original-src", oldSrc);
+    }
 
-if (!originalSrc) {
-    originalSrc = $img.attr("src");
-    $img.attr("data-original-src", originalSrc);
-}
+    const dims = imageMetaMap.get(currentEditingImg) || {};
 
-// convert to base64
-selectedImageSrc = await toDataURL(selectedImageSrc);
+    if (item.type === "img") {
 
+        $el.attr("src", selectedImageSrc);
 
-// convert to base64
-selectedImageSrc = await toDataURL(selectedImageSrc);
+    const dims = imageMetaMap.get(currentEditingImg) || {};
 
-// update ONLY UI
-$img.attr("src", selectedImageSrc);
+        $el.attr("src", selectedImageSrc);
 
-const isGeneratedActive = $('[data-tab="generated"]').hasClass("active");
-const container = isGeneratedActive ? $("#ai-generated") : $("#ai-original");
+        if (dims.width && dims.height) {
+            $el.css({
+                width: dims.width + "px",
+                height: dims.height + "px",
+                objectFit: "cover"
+            });
+        } else {
+            $el.css({
+                maxWidth: "100%",
+                height: "auto",
+                objectFit: "contain"
+            });
+        }
 
-resetImageEditMode(container);
+    } else {
 
-//alert("selectedImageSrc----" +selectedImageSrc);
+        const el = currentEditingImg;
+
+        el.style.backgroundImage = "none";
+
+        setTimeout(() => {
+
+            el.style.backgroundImage = `url('${selectedImageSrc}')`;
+            el.style.backgroundPosition = "center";
+            el.style.backgroundRepeat = "no-repeat";
+
+            el.style.backgroundSize = "cover";
+
+            if (!el.offsetHeight) {
+                el.style.minHeight = dims.height ? dims.height + "px" : "200px";
+            }
+
+        }, 10);
+    }
+
+    const isGeneratedActive = $('[data-tab="generated"]').hasClass("active");
+    const container = isGeneratedActive ? $("#ai-generated") : $("#ai-original");
+
+    resetImageEditMode(container);
+
     ai_generated_image = newImageName;
 
-let generatedHTML = getCleanHTML($("#ai-generated"));
-const formData = new FormData();
+    const formData = new FormData();
+    formData.append("sectionId", currentSection);
+    formData.append("client", getCookie("clientName"));
+    formData.append("project", getCookie("projectName"));
+    formData.append("ai_generated_image", ai_generated_image);
+    formData.append("images", selectedImageSrc);
+    formData.append("original_image_path", oldSrc);
 
-formData.append("sectionId", currentSection);
-//formData.append("html", generatedHTML);
-formData.append("client", getCookie("clientName"));
-formData.append("project", getCookie("projectName"));
-formData.append("ai_generated_image", ai_generated_image);
-formData.append("images", selectedImageSrc); // base64
-formData.append("original_image_path", oldSrc);
+    let list = (getCookie("ai_generated_section_images") || "").split(",").filter(Boolean);
 
+    if (!list.includes(ai_generated_image)) {
+        list.push(ai_generated_image);
+        document.cookie = "ai_generated_section_images=" + list.join(",") + "; path=/";
+    }
 
-// alert("ai_generated_image");
-let list = (getCookie("ai_generated_section_images") || "").split(",").filter(Boolean);
+    let sourceContainer = isGeneratedActive ? $("#ai-generated") : $("#ai-original");
 
-if (!list.includes(ai_generated_image)) {
-    list.push(ai_generated_image);
-    document.cookie = "ai_generated_section_images=" + list.join(",") + "; path=/";
-}
+    let generatedHTML = sourceContainer.html();
 
-const res = await fetch("/ai/save_section/", {
-    method: "POST",
-    headers: {
-        "X-CSRFToken": getCookie("csrftoken")
-    },
-    body: formData
-});
+    try {
+        const response = await fetch("/ai/save_section/", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            },
+            body: formData
+        });
 
-    const response = await res.json();
-    console.log('response: ', response)
+        if (response.ok) {
+            const data = await response.json(); // optional, if your backend returns JSON
+
+            // Code changes to replace AI generated section area on main page with updated html file
+            const adjacentBlockOfAIGeneratedSection = $("#"+currentSection);
+            if(!adjacentBlockOfAIGeneratedSection.length){
+                console.warn("Container not found:", currentSection);
+                return;
+            }
+            let aiGeneratedSection = adjacentBlockOfAIGeneratedSection.find(".ai-generated-wrapper");
+            aiGeneratedSection.html(data.file);
+
+            // Replace AI generated section area in pop-up  with updated  html file
+            document.getElementById("ai-generated").innerHTML = data.file;
+
+        } else {
+            console.error("Server error:", response.status);
+        }
+
+    } catch (err) {}
+
+    currentEditingImg = null;
+    selectedImageSrc = null;
+    selectedFile = null;
 
     $("#imagePickerModal").hide();
+
 });
 
 // -----------------------------
@@ -1513,8 +1687,39 @@ function updateActionButtons(tab){
         editBtn.style.display = "inline-block";
     }
 }
-function getCleanHTML(container) {
+function getCleanHTML(container){
+
     let clone = container.clone();
+
+    clone.find(".radio-holder").remove();
+    clone.find(".generate-btn").remove();
+    clone.find(".ai-toggle").remove();
+
+    clone.find("*").each(function(){
+
+        // restore background
+        let originalBg = $(this).attr("data-original-bg");
+        if (originalBg) {
+            $(this).css("background-image", originalBg);
+        }
+
+        let style = $(this).attr("style");
+        if(!style) return;
+
+        let cleaned = style
+            .replace(/outline\s*:[^;]+;?/gi, "")
+            .replace(/border\s*:[^;]+;?/gi, "")
+            .replace(/cursor\s*:[^;]+;?/gi, "");
+
+        cleaned = cleaned.trim();
+
+        if(cleaned === ""){
+            $(this).removeAttr("style");
+        }else{
+            $(this).attr("style", cleaned);
+        }
+
+    });
 
     clone.find("img").each(function () {
         let originalSrc = $(this).attr("data-original-src");
@@ -1523,16 +1728,22 @@ function getCleanHTML(container) {
         }
     });
 
-    return clone.html();
+    return clone.html().trim();
 }
 
 function resetImageEditMode(container){
-    container.find("img").each(function(){
-        $(this).css({
-            outline: "",
-            border: "",
-            cursor: ""
-        });
-        $(this).off("click");
+
+    container.find("*").each(function(){
+
+        this.style.outline = "";
+        this.style.border = "";
+        this.style.cursor = "";
+
+        if(this.getAttribute("style") === ""){
+            this.removeAttribute("style");
+        }
+
+        $(this).off("click.imageEdit");
     });
+
 }

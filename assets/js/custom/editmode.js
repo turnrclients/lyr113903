@@ -19,7 +19,9 @@ function getCookie(name) {
 
 
     $(document).on('click', '.edit-site', function() {
+        // alert("called");
      var filename = $(this).attr("href");
+
         // alert('filename------------------: ' + filename);
         console.log('filename: ', filename);
 

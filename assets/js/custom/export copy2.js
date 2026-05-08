@@ -574,7 +574,9 @@ sectionClone.find('.company_name').contents().filter(function () {
             :root {
                 --site-font: ${headerFont};
             }
-            body, #wrapper, #wrapper * {
+            body,
+            #wrapper,
+            #wrapper *:not(i):not([class^="ri-"]):not([class*=" ri-"]) {
                 font-family: var(--site-font) !important;
             }
         </style>
@@ -778,7 +780,9 @@ allSectionsOfPage.forEach(sectionId => {
             :root {
                 --site-font: ${headerFont};
             }
-            body, #wrapper, #wrapper * {
+            body,
+            #wrapper,
+            #wrapper *:not(i):not([class^="ri-"]):not([class*=" ri-"]) {
                 font-family: var(--site-font) !important;
             }
         </style>
@@ -801,7 +805,7 @@ allSectionsOfPage.forEach(sectionId => {
 
 
             <script src="assets/js/common_js/send_email.js"></script>
-            
+
             <script src="assets/js/common_js/html_image_editor.js"></script>
             <script src="assets/js/common_js/windows_postmessage.js"></script>
 

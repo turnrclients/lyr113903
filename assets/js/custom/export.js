@@ -1,3 +1,22 @@
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+
+
 // ==============Custom alert========================
 function injectCustomAlertCSS() {
     if (document.getElementById('custom-alert-style')) return;
@@ -160,259 +179,259 @@ function displayLoadingMessage() {
 
 
 function createHTMLFilesDataForWebsiteLinks() {
-const SEOData = {
-    // Local Businesses
-    "Salon & Spa": {
-        keywords: "salon, spa, hair care, beauty treatments, skincare",
-        description: "Premium salon and spa services offering haircuts, styling, skincare, massages, and beauty treatments to rejuvenate and refresh."
-    },
-    "Gym": {
-        keywords: "gym, fitness, workout, personal trainer, strength training",
-        description: "State-of-the-art gyms providing fitness programs, personal training, strength training, and wellness guidance for a healthy lifestyle."
-    },
-    "Clinic": {
-        keywords: "clinic, healthcare, medical services, doctor, health checkup",
-        description: "Professional medical clinics offering general health checkups, consultations, treatments, and specialized healthcare services."
-    },
-    "Café": {
-        keywords: "café, coffee, snacks, beverages, casual dining",
-        description: "Cozy cafés providing freshly brewed coffee, delicious snacks, light meals, and a relaxing environment to unwind."
-    },
-    "Restaurant": {
-        keywords: "restaurant, dining, food, cuisine, meals",
-        description: "Restaurants offering a wide range of cuisines, fine dining experiences, and delicious meals for individuals and families."
-    },
-    "Real Estate Agencies": {
-        keywords: "real estate, property, buying, selling, renting",
-        description: "Expert real estate agencies assisting in buying, selling, and renting residential and commercial properties."
-    },
-    "Travel Agencies": {
-        keywords: "travel agency, tours, vacation packages, flights, hotel bookings",
-        description: "Professional travel agencies offering customized tour packages, flight bookings, hotel reservations, and travel planning services."
-    },
+    const SEOData = {
+        // Local Businesses
+        "Salon & Spa": {
+            keywords: "salon, spa, hair care, beauty treatments, skincare",
+            description: "Premium salon and spa services offering haircuts, styling, skincare, massages, and beauty treatments to rejuvenate and refresh."
+        },
+        "Gym": {
+            keywords: "gym, fitness, workout, personal trainer, strength training",
+            description: "State-of-the-art gyms providing fitness programs, personal training, strength training, and wellness guidance for a healthy lifestyle."
+        },
+        "Clinic": {
+            keywords: "clinic, healthcare, medical services, doctor, health checkup",
+            description: "Professional medical clinics offering general health checkups, consultations, treatments, and specialized healthcare services."
+        },
+        "Café": {
+            keywords: "café, coffee, snacks, beverages, casual dining",
+            description: "Cozy cafés providing freshly brewed coffee, delicious snacks, light meals, and a relaxing environment to unwind."
+        },
+        "Restaurant": {
+            keywords: "restaurant, dining, food, cuisine, meals",
+            description: "Restaurants offering a wide range of cuisines, fine dining experiences, and delicious meals for individuals and families."
+        },
+        "Real Estate Agencies": {
+            keywords: "real estate, property, buying, selling, renting",
+            description: "Expert real estate agencies assisting in buying, selling, and renting residential and commercial properties."
+        },
+        "Travel Agencies": {
+            keywords: "travel agency, tours, vacation packages, flights, hotel bookings",
+            description: "Professional travel agencies offering customized tour packages, flight bookings, hotel reservations, and travel planning services."
+        },
 
-    // Service Provider
-    "Architect": {
-        keywords: "architect, architecture services, building design, planning",
-        description: "Professional architects providing building design, planning, 3D modeling, and construction consultancy services."
-    },
-    "Interior Designer": {
-        keywords: "interior designer, home decor, interior planning, furnishings",
-        description: "Creative interior designers delivering stylish and functional interior solutions for homes, offices, and commercial spaces."
-    },
-    "Photographer/Videographer": {
-        keywords: "photographer, videographer, photography services, video production",
-        description: "Professional photography and videography services for events, weddings, portraits, and commercial projects."
-    },
-    "Event Planner": {
-        keywords: "event planner, event management, party planning, corporate events",
-        description: "Expert event planners managing weddings, corporate events, parties, and other special occasions with seamless execution."
-    },
-    "Chartered Accountant": {
-        keywords: "chartered accountant, accounting, taxation, financial advisory",
-        description: "Certified chartered accountants offering accounting, taxation, audit, and financial advisory services for businesses and individuals."
-    },
-    "Company Secretary": {
-        keywords: "company secretary, compliance, corporate governance, legal documentation",
-        description: "Professional company secretaries ensuring corporate compliance, governance, and proper documentation for businesses."
-    },
-    "Advocate": {
-        keywords: "advocate, lawyer, legal services, litigation, legal advice",
-        description: "Experienced advocates providing legal consultation, representation, and litigation services for individuals and businesses."
-    },
-    "Music Coach": {
-        keywords: "music coach, music lessons, instruments, singing lessons",
-        description: "Professional music coaches offering lessons in instruments, vocals, and music theory for beginners and advanced learners."
-    },
-    "Makeup Artists": {
-        keywords: "makeup artist, bridal makeup, beauty services, cosmetics",
-        description: "Skilled makeup artists providing professional bridal makeup, special occasion makeup, and beauty enhancement services."
-    },
-    "Financial Advisors": {
-        keywords: "financial advisor, investment, wealth management, financial planning",
-        description: "Certified financial advisors offering investment planning, wealth management, retirement planning, and financial guidance."
-    },
+        // Service Provider
+        "Architect": {
+            keywords: "architect, architecture services, building design, planning",
+            description: "Professional architects providing building design, planning, 3D modeling, and construction consultancy services."
+        },
+        "Interior Designer": {
+            keywords: "interior designer, home decor, interior planning, furnishings",
+            description: "Creative interior designers delivering stylish and functional interior solutions for homes, offices, and commercial spaces."
+        },
+        "Photographer/Videographer": {
+            keywords: "photographer, videographer, photography services, video production",
+            description: "Professional photography and videography services for events, weddings, portraits, and commercial projects."
+        },
+        "Event Planner": {
+            keywords: "event planner, event management, party planning, corporate events",
+            description: "Expert event planners managing weddings, corporate events, parties, and other special occasions with seamless execution."
+        },
+        "Chartered Accountant": {
+            keywords: "chartered accountant, accounting, taxation, financial advisory",
+            description: "Certified chartered accountants offering accounting, taxation, audit, and financial advisory services for businesses and individuals."
+        },
+        "Company Secretary": {
+            keywords: "company secretary, compliance, corporate governance, legal documentation",
+            description: "Professional company secretaries ensuring corporate compliance, governance, and proper documentation for businesses."
+        },
+        "Advocate": {
+            keywords: "advocate, lawyer, legal services, litigation, legal advice",
+            description: "Experienced advocates providing legal consultation, representation, and litigation services for individuals and businesses."
+        },
+        "Music Coach": {
+            keywords: "music coach, music lessons, instruments, singing lessons",
+            description: "Professional music coaches offering lessons in instruments, vocals, and music theory for beginners and advanced learners."
+        },
+        "Makeup Artists": {
+            keywords: "makeup artist, bridal makeup, beauty services, cosmetics",
+            description: "Skilled makeup artists providing professional bridal makeup, special occasion makeup, and beauty enhancement services."
+        },
+        "Financial Advisors": {
+            keywords: "financial advisor, investment, wealth management, financial planning",
+            description: "Certified financial advisors offering investment planning, wealth management, retirement planning, and financial guidance."
+        },
 
-    // Education & Learning
-    "Coaching Center": {
-        keywords: "coaching center, tutoring, exam preparation, academic guidance",
-        description: "Professional coaching centers providing subject tutoring, exam preparation, and academic guidance for students."
-    },
-    "Tutor": {
-        keywords: "tutor, private lessons, education, online tutoring",
-        description: "Experienced tutors offering private lessons and online tutoring in various subjects for all academic levels."
-    },
-    "Pre-school & Daycare": {
-        keywords: "preschool, daycare, early childhood education, childcare",
-        description: "Quality preschool and daycare services providing early childhood education, learning activities, and safe childcare."
-    },
-    "School": {
-        keywords: "school, education, primary school, secondary school",
-        description: "Educational institutions offering primary and secondary education with comprehensive curricula and extracurricular activities."
-    },
-    "College": {
-        keywords: "college, higher education, undergraduate, postgraduate courses",
-        description: "Colleges providing undergraduate, postgraduate courses, and professional programs with experienced faculty and campus facilities."
-    },
+        // Education & Learning
+        "Coaching Center": {
+            keywords: "coaching center, tutoring, exam preparation, academic guidance",
+            description: "Professional coaching centers providing subject tutoring, exam preparation, and academic guidance for students."
+        },
+        "Tutor": {
+            keywords: "tutor, private lessons, education, online tutoring",
+            description: "Experienced tutors offering private lessons and online tutoring in various subjects for all academic levels."
+        },
+        "Pre-school & Daycare": {
+            keywords: "preschool, daycare, early childhood education, childcare",
+            description: "Quality preschool and daycare services providing early childhood education, learning activities, and safe childcare."
+        },
+        "School": {
+            keywords: "school, education, primary school, secondary school",
+            description: "Educational institutions offering primary and secondary education with comprehensive curricula and extracurricular activities."
+        },
+        "College": {
+            keywords: "college, higher education, undergraduate, postgraduate courses",
+            description: "Colleges providing undergraduate, postgraduate courses, and professional programs with experienced faculty and campus facilities."
+        },
 
-    // Professional Showcase
-    "Portfolio": {
-        keywords: "portfolio, professional showcase, projects, work samples",
-        description: "Personal and professional portfolios showcasing creative work, projects, achievements, and expertise for career growth."
-    },
-    "Influencer": {
-        keywords: "influencer, social media, brand promotion, content creation",
-        description: "Social media influencers creating engaging content, promoting brands, and connecting with their audience effectively."
-    },
-    "Blogger/Vlogger": {
-        keywords: "blogger, vlogger, content creation, online writing, video blogging",
-        description: "Bloggers and vloggers producing high-quality written and video content, sharing expertise, reviews, and personal experiences online."
-    },
+        // Professional Showcase
+        "Portfolio": {
+            keywords: "portfolio, professional showcase, projects, work samples",
+            description: "Personal and professional portfolios showcasing creative work, projects, achievements, and expertise for career growth."
+        },
+        "Influencer": {
+            keywords: "influencer, social media, brand promotion, content creation",
+            description: "Social media influencers creating engaging content, promoting brands, and connecting with their audience effectively."
+        },
+        "Blogger/Vlogger": {
+            keywords: "blogger, vlogger, content creation, online writing, video blogging",
+            description: "Bloggers and vloggers producing high-quality written and video content, sharing expertise, reviews, and personal experiences online."
+        },
 
-    // Health & Wellness
-    "Fitness & Gym": {
-        keywords: "fitness, gym, workout, personal training, health",
-        description: "Fitness and gym services offering workout routines, personal training, wellness programs, and health improvement guidance."
-    },
-    "Yoga & Meditation": {
-        keywords: "yoga, meditation, wellness, mindfulness, relaxation",
-        description: "Yoga and meditation classes promoting physical, mental, and spiritual wellness through guided practices."
-    },
-    "Nutritionist": {
-        keywords: "nutritionist, diet plan, healthy eating, weight management",
-        description: "Professional nutritionists providing personalized diet plans, healthy eating guidance, and weight management solutions."
-    },
-    "Clinic": {
-        keywords: "clinic, medical services, healthcare, treatment, consultation",
-        description: "Clinics offering professional healthcare services, medical consultation, and treatment for various health conditions."
-    },
-    "Pharmacy": {
-        keywords: "pharmacy, medicines, prescriptions, health products",
-        description: "Pharmacies providing prescription medications, health products, and over-the-counter treatments for wellness and recovery."
-    },
-    "Fitness Coach": {
-        keywords: "fitness coach, personal training, health guidance, workout plan",
-        description: "Certified fitness coaches offering personalized workout plans, nutrition advice, and guidance for physical fitness."
-    },
+        // Health & Wellness
+        "Fitness & Gym": {
+            keywords: "fitness, gym, workout, personal training, health",
+            description: "Fitness and gym services offering workout routines, personal training, wellness programs, and health improvement guidance."
+        },
+        "Yoga & Meditation": {
+            keywords: "yoga, meditation, wellness, mindfulness, relaxation",
+            description: "Yoga and meditation classes promoting physical, mental, and spiritual wellness through guided practices."
+        },
+        "Nutritionist": {
+            keywords: "nutritionist, diet plan, healthy eating, weight management",
+            description: "Professional nutritionists providing personalized diet plans, healthy eating guidance, and weight management solutions."
+        },
+        "Clinic": {
+            keywords: "clinic, medical services, healthcare, treatment, consultation",
+            description: "Clinics offering professional healthcare services, medical consultation, and treatment for various health conditions."
+        },
+        "Pharmacy": {
+            keywords: "pharmacy, medicines, prescriptions, health products",
+            description: "Pharmacies providing prescription medications, health products, and over-the-counter treatments for wellness and recovery."
+        },
+        "Fitness Coach": {
+            keywords: "fitness coach, personal training, health guidance, workout plan",
+            description: "Certified fitness coaches offering personalized workout plans, nutrition advice, and guidance for physical fitness."
+        },
 
-    // Food & Hospitality
-    "Restaurants": {
-        keywords: "restaurants, dining, food, cuisine, meals",
-        description: "Restaurants offering diverse cuisines, quality dining experiences, and delicious meals for individuals, families, and groups."
-    },
-    "Cafes & Bakeries": {
-        keywords: "cafe, bakery, coffee, pastries, snacks",
-        description: "Cafes and bakeries providing freshly baked goods, coffee, pastries, and a cozy environment for relaxation."
-    },
-    "Catering Services": {
-        keywords: "catering services, event catering, food delivery, party catering",
-        description: "Professional catering services offering customized menus, food preparation, and delivery for events and gatherings."
-    },
-    "Hotel/Lounges": {
-        keywords: "hotel, lounge, accommodation, hospitality, stay",
-        description: "Hotels and lounges providing comfortable accommodations, hospitality services, and dining facilities for guests."
-    },
+        // Food & Hospitality
+        "Restaurants": {
+            keywords: "restaurants, dining, food, cuisine, meals",
+            description: "Restaurants offering diverse cuisines, quality dining experiences, and delicious meals for individuals, families, and groups."
+        },
+        "Cafes & Bakeries": {
+            keywords: "cafe, bakery, coffee, pastries, snacks",
+            description: "Cafes and bakeries providing freshly baked goods, coffee, pastries, and a cozy environment for relaxation."
+        },
+        "Catering Services": {
+            keywords: "catering services, event catering, food delivery, party catering",
+            description: "Professional catering services offering customized menus, food preparation, and delivery for events and gatherings."
+        },
+        "Hotel/Lounges": {
+            keywords: "hotel, lounge, accommodation, hospitality, stay",
+            description: "Hotels and lounges providing comfortable accommodations, hospitality services, and dining facilities for guests."
+        },
 
-    // Events & Entertainment
-    "Event Planner": {
-        keywords: "event planner, event management, wedding planning, corporate events",
-        description: "Expert event planners managing weddings, corporate events, and private parties with creativity and flawless execution."
-    },
-    "Event Booking Platform": {
-        keywords: "event booking, online platform, tickets, event management",
-        description: "Online event booking platforms allowing easy ticketing, scheduling, and management of various events and experiences."
-    },
+        // Events & Entertainment
+        "Event Planner": {
+            keywords: "event planner, event management, wedding planning, corporate events",
+            description: "Expert event planners managing weddings, corporate events, and private parties with creativity and flawless execution."
+        },
+        "Event Booking Platform": {
+            keywords: "event booking, online platform, tickets, event management",
+            description: "Online event booking platforms allowing easy ticketing, scheduling, and management of various events and experiences."
+        },
 
-    // Nonprofit & Community
-    "Charity/NGO": {
-        keywords: "charity, NGO, nonprofit, donations, social work",
-        description: "Charity organizations and NGOs working to support communities, raise funds, and create social impact through various initiatives."
-    },
-    "Religious Organizations": {
-        keywords: "religious organization, faith, spiritual services, worship",
-        description: "Religious organizations providing spiritual guidance, community services, and places of worship for followers."
-    },
+        // Nonprofit & Community
+        "Charity/NGO": {
+            keywords: "charity, NGO, nonprofit, donations, social work",
+            description: "Charity organizations and NGOs working to support communities, raise funds, and create social impact through various initiatives."
+        },
+        "Religious Organizations": {
+            keywords: "religious organization, faith, spiritual services, worship",
+            description: "Religious organizations providing spiritual guidance, community services, and places of worship for followers."
+        },
 
-    // Automotive & Transportation
-    "Car Dealerships": {
-        keywords: "car dealership, vehicles, car sales, new cars, used cars",
-        description: "Car dealerships offering new and pre-owned vehicles, financing options, and after-sales services."
-    },
-    "Auto Repair Shops": {
-        keywords: "auto repair, car maintenance, vehicle service, mechanic",
-        description: "Auto repair shops providing vehicle maintenance, repair services, diagnostics, and mechanical solutions."
-    },
-    "Car Rentals": {
-        keywords: "car rental, vehicle hire, transportation, travel",
-        description: "Car rental services providing vehicles for short-term or long-term hire for personal or business travel."
-    },
-    "Logistics & Shipping": {
-        keywords: "logistics, shipping, freight, delivery, transport services",
-        description: "Logistics and shipping companies offering transport, freight forwarding, and delivery solutions for businesses and individuals."
-    },
-    "Rideshare Services": {
-        keywords: "rideshare, taxi, cab service, transportation, driver",
-        description: "Rideshare services offering convenient, on-demand transportation options with professional drivers."
-    },
+        // Automotive & Transportation
+        "Car Dealerships": {
+            keywords: "car dealership, vehicles, car sales, new cars, used cars",
+            description: "Car dealerships offering new and pre-owned vehicles, financing options, and after-sales services."
+        },
+        "Auto Repair Shops": {
+            keywords: "auto repair, car maintenance, vehicle service, mechanic",
+            description: "Auto repair shops providing vehicle maintenance, repair services, diagnostics, and mechanical solutions."
+        },
+        "Car Rentals": {
+            keywords: "car rental, vehicle hire, transportation, travel",
+            description: "Car rental services providing vehicles for short-term or long-term hire for personal or business travel."
+        },
+        "Logistics & Shipping": {
+            keywords: "logistics, shipping, freight, delivery, transport services",
+            description: "Logistics and shipping companies offering transport, freight forwarding, and delivery solutions for businesses and individuals."
+        },
+        "Rideshare Services": {
+            keywords: "rideshare, taxi, cab service, transportation, driver",
+            description: "Rideshare services offering convenient, on-demand transportation options with professional drivers."
+        },
 
-    // Sports & Recreation
-    "Sports Clubs": {
-        keywords: "sports club, fitness, team sports, recreation, activities",
-        description: "Sports clubs providing facilities and training for team sports, recreational activities, and fitness programs."
-    },
-    "Sporting Goods Stores": {
-        keywords: "sporting goods, equipment, sports store, gear",
-        description: "Sporting goods stores offering equipment, apparel, and gear for various sports and recreational activities."
-    },
-    "Game Zone": {
-        keywords: "game zone, entertainment, arcade, gaming center",
-        description: "Game zones and arcades offering fun, interactive entertainment, and gaming experiences for all ages."
-    },
+        // Sports & Recreation
+        "Sports Clubs": {
+            keywords: "sports club, fitness, team sports, recreation, activities",
+            description: "Sports clubs providing facilities and training for team sports, recreational activities, and fitness programs."
+        },
+        "Sporting Goods Stores": {
+            keywords: "sporting goods, equipment, sports store, gear",
+            description: "Sporting goods stores offering equipment, apparel, and gear for various sports and recreational activities."
+        },
+        "Game Zone": {
+            keywords: "game zone, entertainment, arcade, gaming center",
+            description: "Game zones and arcades offering fun, interactive entertainment, and gaming experiences for all ages."
+        },
 
-    // Pets & Animals
-    "Pet Store": {
-        keywords: "pet store, pets, pet supplies, animals, pet care",
-        description: "Pet stores offering a wide range of pets, food, accessories, and healthcare products for your beloved animals."
-    },
-    "Pet Grooming": {
-        keywords: "pet grooming, pet care, bathing, trimming, pets",
-        description: "Professional pet grooming services including bathing, trimming, and styling for all types of pets."
-    },
-    "Animal Shelters": {
-        keywords: "animal shelter, rescue, adoption, pets, shelter",
-        description: "Animal shelters rescuing, caring for, and facilitating adoption of homeless and abandoned animals."
-    },
+        // Pets & Animals
+        "Pet Store": {
+            keywords: "pet store, pets, pet supplies, animals, pet care",
+            description: "Pet stores offering a wide range of pets, food, accessories, and healthcare products for your beloved animals."
+        },
+        "Pet Grooming": {
+            keywords: "pet grooming, pet care, bathing, trimming, pets",
+            description: "Professional pet grooming services including bathing, trimming, and styling for all types of pets."
+        },
+        "Animal Shelters": {
+            keywords: "animal shelter, rescue, adoption, pets, shelter",
+            description: "Animal shelters rescuing, caring for, and facilitating adoption of homeless and abandoned animals."
+        },
 
-    // Repair & Maintenance
-    "Fabrication": {
-        keywords: "fabrication, metal work, welding, custom structures",
-        description: "Professional fabrication services providing metalwork, welding, and custom structure creation for various projects."
-    },
-    "Plumbing": {
-        keywords: "plumber, plumbing services, leak repair, pipe installation",
-        description: "Expert plumbing services for residential and commercial plumbing, leak repair, and pipe installations."
-    },
-    "Civil Work": {
-        keywords: "civil work, construction, building services, infrastructure",
-        description: "Civil work services including construction, building maintenance, infrastructure projects, and structural solutions."
-    },
-    "Electrician": {
-        keywords: "electrician, electrical services, wiring, installation, maintenance",
-        description: "Professional electricians providing installation, repair, and maintenance of electrical systems for homes and businesses."
-    },
-    "Carpenter": {
-        keywords: "carpenter, woodworking, furniture, repairs",
-        description: "Skilled carpenters providing furniture making, repairs, custom woodworking, and cabinetry services."
-    },
-    "Cleaning Service": {
-        keywords: "cleaning service, housekeeping, janitorial, office cleaning, home cleaning",
-        description: "Professional cleaning services offering residential, commercial, and specialized cleaning solutions."
-    },
-    "Electronic Item Services": {
-        keywords: "electronics repair, gadget service, device maintenance, tech support",
-        description: "Expert electronic repair services for gadgets, home appliances, and electronic devices with reliable maintenance solutions."
-    }
-};
+        // Repair & Maintenance
+        "Fabrication": {
+            keywords: "fabrication, metal work, welding, custom structures",
+            description: "Professional fabrication services providing metalwork, welding, and custom structure creation for various projects."
+        },
+        "Plumbing": {
+            keywords: "plumber, plumbing services, leak repair, pipe installation",
+            description: "Expert plumbing services for residential and commercial plumbing, leak repair, and pipe installations."
+        },
+        "Civil Work": {
+            keywords: "civil work, construction, building services, infrastructure",
+            description: "Civil work services including construction, building maintenance, infrastructure projects, and structural solutions."
+        },
+        "Electrician": {
+            keywords: "electrician, electrical services, wiring, installation, maintenance",
+            description: "Professional electricians providing installation, repair, and maintenance of electrical systems for homes and businesses."
+        },
+        "Carpenter": {
+            keywords: "carpenter, woodworking, furniture, repairs",
+            description: "Skilled carpenters providing furniture making, repairs, custom woodworking, and cabinetry services."
+        },
+        "Cleaning Service": {
+            keywords: "cleaning service, housekeeping, janitorial, office cleaning, home cleaning",
+            description: "Professional cleaning services offering residential, commercial, and specialized cleaning solutions."
+        },
+        "Electronic Item Services": {
+            keywords: "electronics repair, gadget service, device maintenance, tech support",
+            description: "Expert electronic repair services for gadgets, home appliances, and electronic devices with reliable maintenance solutions."
+        }
+    };
 
 
 
@@ -420,35 +439,38 @@ const SEOData = {
     var imagesNameList = "";
 
 
-const clientEmail = getCookie("clientEmail") || "";
-const clientMobile = getCookie("clientMobile") || "";
-const clientAddress = getCookie("clientAddress") || "";
+    const clientEmail = getCookie("clientEmail") || "";
+    const clientMobile = getCookie("clientMobile") || "";
+    const clientAddress = getCookie("clientAddress") || "";
 
-// images from localStorage
-const logoImage = localStorage.getItem("logoImage") || "";
-const sliderImage = localStorage.getItem("sliderImage") || "";
-
-
+    // images from localStorage
+    const logoImage = localStorage.getItem("logoImage") || "";
+    const sliderImage = localStorage.getItem("sliderImage") || "";
 
 
 
 
-const globalHeaderObj = JSON.parse(getCookie('globalHeader') || "{}");
-const globalFooterObj = JSON.parse(getCookie('globalFooter') || "{}");
 
-const globalHeader = globalHeaderObj.id;
-const globalFooter = globalFooterObj.id;
 
-const headerTemplate = globalHeaderObj.template;
-const footerTemplate = globalFooterObj.template;
+    const globalHeaderObj = JSON.parse(getCookie('globalHeader') || "{}");
+    const globalFooterObj = JSON.parse(getCookie('globalFooter') || "{}");
+
+    const globalHeader = globalHeaderObj.id;
+    const globalFooter = globalFooterObj.id;
+
+    const headerTemplate = globalHeaderObj.template;
+    //alert("Path------"+globalHeaderObj.template);
+
+
+    const footerTemplate = globalFooterObj.template;
 
     const headerPages = JSON.parse(getCookie('HeaderPages') || "[]");
 
     const middleSectionsCookie = getCookie('middle_sections');
     const middleSections = {}
-    if(middleSectionsCookie != undefined) {
+    if (middleSectionsCookie != undefined) {
         const middleSectionsObj = JSON.parse(middleSectionsCookie);
-        for(const key in middleSectionsObj){
+        for (const key in middleSectionsObj) {
             middleSections[key] = middleSectionsObj[key]
         }
     }
@@ -468,101 +490,127 @@ const footerTemplate = globalFooterObj.template;
         FooterPages.push(...footerLinks);
     });
 
-const filteredFooterPages = FooterPages.filter(page => {
-    return !headerPages.some(h =>
-        h.replace(/^header_/, '').toLowerCase() === page.toLowerCase()
-    );
-});
-   if (!headerTemplate || !footerTemplate) {
-       alert('You forgot to add Header or Footer for your website so please add before proceeding further.');
+    const filteredFooterPages = FooterPages.filter(page => {
+        return !headerPages.some(h =>
+            h.replace(/^header_/, '').toLowerCase() === page.toLowerCase()
+        );
+    });
+    // alert("headerTemplate"+headerTemplate);
+    //   alert("footerTemplate"+footerTemplate);
+    if (!headerTemplate || !footerTemplate) {
+        alert('You forgot to add Header or Footer for your website so please add before proceeding further.');
         return;
     }
 
     const mainPages = [];
     const subPages = {};
 
-    // Separate main pages and subpages
-    headerPages.forEach(page => {
-        if (page.includes('_sub_')) {
-            const [mainPage, subPage] = page.split('_sub_');
-            if (!subPages[mainPage]) {
-                subPages[mainPage] = [];
+    // // Separate main pages and subpages
+    // headerPages.forEach(page => {
+    //     if (page.includes('_sub_')) {
+    //         const [mainPage, subPage] = page.split('_sub_');
+    //         if (!subPages[mainPage]) {
+    //             subPages[mainPage] = [];
+    //         }
+    //         subPages[mainPage].push(subPage);
+    //     } else {
+    //         mainPages.push(page);
+    //     }
+    // });
+
+
+    try {
+        // const headerPages = JSON.parse(getCookie('HeaderPages') || "[]");
+
+
+        // const mainPages = [];
+        // const subPages = {};
+
+        headerPages.forEach(function (page) {
+            if (page.includes('_sub_')) {
+                const parts = page.split('_sub_');
+                const main = parts[0];
+                const sub = parts[1];
+
+                if (!subPages[main]) subPages[main] = [];
+                subPages[main].push(sub);
+            } else {
+                mainPages.push(page);
             }
-            subPages[mainPage].push(subPage);
-        } else {
-            mainPages.push(page);
+        });
+
+        if (globalHeader) {
+            var headerEl = $("#" + globalHeader);
+            if (headerEl.length && headerEl.find('#dynamic-header').length) {
+
+                headerEl.find('#dynamic-header').html(
+                    generateMenu(mainPages, subPages)
+                );
+            }
         }
-    });
-
-try {
-    const headerPages = JSON.parse(getCookie('HeaderPages') || "[]");
-
-    const mainPages = [];
-    const subPages = {};
-
-    headerPages.forEach(function(page) {
-        if (page.includes('_sub_')) {
-            const parts = page.split('_sub_');
-            const main = parts[0];
-            const sub = parts[1];
-
-            if (!subPages[main]) subPages[main] = [];
-            subPages[main].push(sub);
-        } else {
-            mainPages.push(page);
-        }
-    });
-
-    if (globalHeader) {
-        var headerEl = $("#" + globalHeader);
-        if (headerEl.length && headerEl.find('#dynamic-header').length) {
-            headerEl.find('#dynamic-header').html(
-                generateMenu(mainPages, subPages)
-            );
-        }
+    } catch (e) {
+        console.error("Header refresh error:", e);
     }
-} catch (e) {
-    console.error("Header refresh error:", e);
-}
 
     // Generate Common Header with Menus for all the pages
-let headerSection = null;
+    let headerSection = null;
+    let request_src = "section";
 
-if (headerTemplate) {
 
-    $.ajax({
-        url: headerTemplate,
-        type: "GET",
-        async: false,
-        success: function (html) {
-
-            const parsed = $(html);
-
-            let section = null;
-
-                if (parsed.is('section')) {
-                    section = parsed;
-                } else if (parsed.find('section').length) {
-                    section = parsed.find('section').first();
-                } else {
-                    section = parsed;
-                }
-
-            // WRAP PROPERLY (IMPORTANT FIX)
-            headerSection = $('<div></div>').append(section);
-
-            // Inject into DOM (hidden)
-            $("#temp-header-container").remove();
-            $("body").append(
-                $('<div id="temp-header-container" style="display:none;"></div>').append(headerSection)
-            );
-        },
-        error: function () {
-            console.error("Header load failed:", headerTemplate);
+    if (headerTemplate) {
+        // alert("Inside if111-----" + headerTemplate);
+        if (headerTemplate.includes("aig")) {
+            request_src = "ai_gen"
         }
-    });
+        const requestData = {
+            request_src: request_src,
+            section_path: headerTemplate,
+            file_name: ""
+        }
 
-}
+        $.ajax({
+            // url: headerTemplate,
+            // type: "GET",
+            // async: false,
+            url: "/fetch_html_sections/",
+            type: "POST",
+            data: requestData,
+            async: false,
+            headers: {
+                "X-CSRFToken": csrftoken
+            },
+
+            success: function (html) {
+                // alert("htmlNew"+html);
+                // const parsed = $(html);
+
+                // let section = null;
+
+                // if (parsed.is('section')) {
+                //     section = parsed;
+                // } else if (parsed.find('section').length) {
+                //     section = parsed.find('section').first();
+                // } else {
+                //     section = parsed;
+                // }
+
+                // WRAP PROPERLY (IMPORTANT FIX)
+                headerSection = $('<div></div>').append(html);
+
+                // Inject into DOM (hidden)
+                $("#temp-header-container").remove();
+                $("body").append(
+                    $('<div id="temp-header-container" style="display:none;"></div>').append(headerSection)
+                );
+
+            },
+            error: function () {
+
+                console.error("Header load failed:", headerTemplate);
+            }
+        });
+
+    }
 
     // headerSection.find('.radio-holder').remove();
 
@@ -576,105 +624,116 @@ if (headerTemplate) {
     }
 
 
-try {
-    const footerContent = generateFooterLinks();
+    try {
+        const footerContent = generateFooterLinks();
 
-    $("." + globalFooter + "_old").each(function(index) {
+        $("." + globalFooter + "_old").each(function (index) {
 
-        const data = footerContent[index];
-        if (!data) return;
+            const data = footerContent[index];
+            if (!data) return;
 
-        const el = $(this);
+            const el = $(this);
 
-        el.find("#quick-link-title").text(data.title);
+            el.find("#quick-link-title").text(data.title);
 
-        const ul = el.find(".footer-navigation");
-        ul.empty();
+            const ul = el.find(".footer-navigation");
+            ul.empty();
 
-        data.links.forEach(function(link) {
-            ul.append(
-                '<li><a href="' + link.url + '.html">' + link.name + '</a></li>'
-            );
+            data.links.forEach(function (link) {
+                ul.append(
+                    '<li><a href="' + link.url + '.html">' + link.name + '</a></li>'
+                );
+            });
         });
-    });
-} catch (e) {
-    console.error("Footer refresh error:", e);
-}
+    } catch (e) {
+        console.error("Footer refresh error:", e);
+    }
 
     // Generate Common Footer with Menus for all the pages
-// ===== LOAD FOOTER FROM TEMPLATE =====
-let footerSection = null;
+    // ===== LOAD FOOTER FROM TEMPLATE =====
+    let footerSection = null;
 
-if (footerTemplate) {
-
-    $.ajax({
-        url: footerTemplate,
-        type: "GET",
-        async: false,
-        success: function (html) {
-
-            const parsed = $(html);
-
-            let section = null;
-
-            if (parsed.is('section')) {
-                section = parsed;
-            } else if (parsed.find('section').length) {
-                section = parsed.find('section').first();
-            } else {
-                section = parsed; // fallback
-            }
-
-            // wrap properly
-            footerSection = $('<div></div>').append(section);
-
-            $("#temp-footer-container").remove();
-            $("body").append(
-                $('<div id="temp-footer-container" style="display:none;"></div>')
-                    .append(footerSection)
-            );
-        },
-        error: function () {
-            console.error("Footer load failed:", footerTemplate);
+    if (footerTemplate) {
+        if (footerTemplate.includes("aig")) {
+            request_src = "ai_gen"
         }
-    });
+        const requestData = {
+            request_src: request_src,
+            section_path: footerTemplate,
+            file_name: ""
+        }
+        $.ajax({
+            url: "/fetch_html_sections/",
+            type: "POST",
+            data: requestData,
+            async: false,
+            headers: {
+                "X-CSRFToken": csrftoken
+            },
+            success: function (html) {
 
-}
+                const parsed = $(html);
 
-// ===== SAFETY =====
-if (!footerSection || !footerSection.length) {
-    console.error("Footer not loaded");
-    alert("Footer template failed");
-    return;
-}
+                let section = null;
 
-// ===== APPLY FOOTER LINKS ON TEMPLATE =====
-if (globalFooter.includes('footer-')) {
+                if (parsed.is('section')) {
+                    section = parsed;
+                } else if (parsed.find('section').length) {
+                    section = parsed.find('section').first();
+                } else {
+                    section = parsed; // fallback
+                }
 
-    const footerContent = generateFooterLinks();
+                // wrap properly
+                footerSection = $('<div></div>').append(section);
 
-    const existingNavs = footerSection.find("." + globalFooter + "_old");
+                $("#temp-footer-container").remove();
+                $("body").append(
+                    $('<div id="temp-footer-container" style="display:none;"></div>')
+                        .append(footerSection)
+                );
+            },
+            error: function () {
+                console.error("Footer load failed:", footerTemplate);
+            }
+        });
 
-    existingNavs.each(function(index) {
+    }
 
-        const existingNav = $(this);
-        const footerData = footerContent[index];
+    // ===== SAFETY =====
+    if (!footerSection || !footerSection.length) {
+        console.error("Footer not loaded");
+        alert("Footer template failed");
+        return;
+    }
 
-        if (footerData) {
+    // ===== APPLY FOOTER LINKS ON TEMPLATE =====
+    if (globalFooter.includes('footer-')) {
 
-            existingNav.find("#quick-link-title").text(footerData.title);
+        const footerContent = generateFooterLinks();
 
-            const ulElement = existingNav.find(".footer-navigation");
-            ulElement.empty();
+        const existingNavs = footerSection.find("." + globalFooter + "_old");
 
-            footerData.links.forEach(link => {
-                ulElement.append(`
+        existingNavs.each(function (index) {
+
+            const existingNav = $(this);
+            const footerData = footerContent[index];
+
+            if (footerData) {
+
+                existingNav.find("#quick-link-title").text(footerData.title);
+
+                const ulElement = existingNav.find(".footer-navigation");
+                ulElement.empty();
+
+                footerData.links.forEach(link => {
+                    ulElement.append(`
                     <li><a href="${link.url}.html">${link.name}</a></li>
                 `);
-            });
-        }
-    });
-}
+                });
+            }
+        });
+    }
 
 
 
@@ -685,28 +744,28 @@ if (globalFooter.includes('footer-')) {
         }
     }
     var clientName = getCookie("clientName");
-    var clientProjectName =  getCookie("projectName");
+    var clientProjectName = getCookie("projectName");
 
-function replaceLogoWithText(section, projectName) {
+    function replaceLogoWithText(section, projectName) {
 
-    section.find('.generated-logo').each(function () {
+        section.find('.generated-logo').each(function () {
 
-        const textLogo = $(this);
-        const imgLogo = textLogo.siblings('img.site-logo-img');
+            const textLogo = $(this);
+            const imgLogo = textLogo.siblings('img.site-logo-img');
 
-        textLogo.text(projectName.toUpperCase());
+            textLogo.text(projectName.toUpperCase());
 
-        imgLogo.hide();
-        textLogo.show();
-    });
-}
+            imgLogo.hide();
+            textLogo.show();
+        });
+    }
 
 
 
     function processImagesAndRemoveThemeClasses(section, clientName, clientProjectName) {
         // Handle images and background images
 
-        section.find('img').each(function() {
+        section.find('img').each(function () {
             const oldSrc = $(this).attr("src");
             if (oldSrc && (oldSrc.endsWith(".jpeg") || oldSrc.endsWith(".JPG") || oldSrc.endsWith(".jpg") || oldSrc.endsWith(".png") || oldSrc.endsWith(".svg"))) {
                 // Check if the src contains 'assets/images/' and replace it
@@ -719,14 +778,14 @@ function replaceLogoWithText(section, projectName) {
             }
         });
 
-        section.find('*').each(function() {
+        section.find('*').each(function () {
             const backgroundImage = $(this).css("background-image");
             if (backgroundImage && backgroundImage !== 'none') {
                 const imageUrl = backgroundImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
                 // Check if the background image URL contains 'assets/images/' and replace it
                 if (imageUrl && (imageUrl.endsWith(".jpeg") || imageUrl.endsWith(".JPG") || imageUrl.endsWith(".jpg") || imageUrl.endsWith(".png") || imageUrl.endsWith(".svg"))) {
                     if (imageUrl.includes("assets/images/")) {
-                       // const newImageUrl = imageUrl.replace("assets/images/", `assets/clients/${clientName}/${clientProjectName}/images/`);
+                        // const newImageUrl = imageUrl.replace("assets/images/", `assets/clients/${clientName}/${clientProjectName}/images/`);
                         const newImageUrl = imageUrl.replace("assets/images/", `assets/images/`);
                         $(this).css("background-image", `url(${newImageUrl})`); // Update the background-image URL
                     }
@@ -748,41 +807,41 @@ function replaceLogoWithText(section, projectName) {
 
 
     // Process header and footer sections
-//     processImagesAndRemoveThemeClasses(headerSection,clientName, clientProjectName);
-//     processImagesAndRemoveThemeClasses(footerSection,clientName, clientProjectName);
+    //     processImagesAndRemoveThemeClasses(headerSection,clientName, clientProjectName);
+    //     processImagesAndRemoveThemeClasses(footerSection,clientName, clientProjectName);
 
 
-// if (clientProjectName) {
-//     replaceLogoWithText(headerSection, clientProjectName);
-//     replaceLogoWithText(footerSection, clientProjectName);
-// }
+    // if (clientProjectName) {
+    //     replaceLogoWithText(headerSection, clientProjectName);
+    //     replaceLogoWithText(footerSection, clientProjectName);
+    // }
 
-//     const headerHTML = headerSection.html();
-//     const footerHTML = footerSection.html();
+    //     const headerHTML = headerSection.html();
+    //     const footerHTML = footerSection.html();
 
-const headerClone = headerSection.clone();
+    const headerClone = headerSection.clone();
 
-headerClone.find('.radio-holder').remove();
-processImagesAndRemoveThemeClasses(headerClone, clientName, clientProjectName);
+    headerClone.find('.radio-holder').remove();
+    processImagesAndRemoveThemeClasses(headerClone, clientName, clientProjectName);
 
-if (clientProjectName) {
-    replaceLogoWithText(headerClone, clientProjectName);
-}
+    if (clientProjectName) {
+        replaceLogoWithText(headerClone, clientProjectName);
+    }
 
-const headerHTML = headerClone.html();
+    const headerHTML = headerClone.html();
 
 
-// ===== FOOTER CLEAN COPY =====
-const footerClone = footerSection.clone();
+    // ===== FOOTER CLEAN COPY =====
+    const footerClone = footerSection.clone();
 
-footerClone.find('.radio-holder').remove();
-processImagesAndRemoveThemeClasses(footerClone, clientName, clientProjectName);
+    footerClone.find('.radio-holder').remove();
+    processImagesAndRemoveThemeClasses(footerClone, clientName, clientProjectName);
 
-if (clientProjectName) {
-    replaceLogoWithText(footerClone, clientProjectName);
-}
+    if (clientProjectName) {
+        replaceLogoWithText(footerClone, clientProjectName);
+    }
 
-const footerHTML = footerClone.html();
+    const footerHTML = footerClone.html();
 
 
 
@@ -801,27 +860,27 @@ const footerHTML = footerClone.html();
         // Add header section in the page
         // if (globalHeader) allSectionsOfPage.push(globalHeader);
 
-let middleKey = null;
+        let middleKey = null;
 
-const keys = Object.keys(middleSections);
+        const keys = Object.keys(middleSections);
 
-let availableMiddleSectionsForPage = middleSections[pageName] || [];
+        let availableMiddleSectionsForPage = middleSections[pageName] || [];
 
-if (availableMiddleSectionsForPage.length > 0) {
+        if (availableMiddleSectionsForPage.length > 0) {
 
-    availableMiddleSectionsForPage.forEach(section => {
-        allSectionsOfPage.push(section);
-    });
+            availableMiddleSectionsForPage.forEach(section => {
+                allSectionsOfPage.push(section);
+            });
 
-} else {
+        } else {
 
-    console.warn("No middle section found for", pageName, "→ using default");
+            console.warn("No middle section found for", pageName, "→ using default");
 
-    allSectionsOfPage.push({
-        id: "default-middle_section",
-        template: "/assets/page_components/1-DO-NOT-DELETE_Default-blank-section/default-middle_section.html" // IMPORTANT
-    });
-}
+            allSectionsOfPage.push({
+                id: "default-middle_section",
+                template: "/assets/page_components/1-DO-NOT-DELETE_Default-blank-section/default-middle_section.html" // IMPORTANT
+            });
+        }
 
         // Add footer section in the page
         // if (globalFooter) allSectionsOfPage.push(globalFooter);
@@ -831,166 +890,185 @@ if (availableMiddleSectionsForPage.length > 0) {
             return;
         }
 
-            let fileName = pageName.replace(/^(header_)/, '');
+        let fileName = pageName.replace(/^(header_)/, '');
 
-            if (fileName.includes('_sub_')) {
-                fileName = fileName.split('_sub_')[1];
-            }
+        if (fileName.includes('_sub_')) {
+            fileName = fileName.split('_sub_')[1];
+        }
 
-            // convert only for file creation
-            fileName = toFileName(fileName);
+        // convert only for file creation
+        fileName = toFileName(fileName);
 
         let pageContent = '';
-//         allSectionsOfPage.forEach(sectionId => {
+        //         allSectionsOfPage.forEach(sectionId => {
 
-//             const originalSection =
-//             document.getElementById(sectionId) ||
-//             document.querySelector(`[id^="${sectionId}"]`);
+        //             const originalSection =
+        //             document.getElementById(sectionId) ||
+        //             document.querySelector(`[id^="${sectionId}"]`);
 
-//             if (!originalSection) {
-//                 console.warn("Missing section in DOM:", sectionId);
-//                 return;  //  Prevents blank pages
-//             }
+        //             if (!originalSection) {
+        //                 console.warn("Missing section in DOM:", sectionId);
+        //                 return;  //  Prevents blank pages
+        //             }
 
-//             const sectionClone = $(originalSection).clone();
-//             sectionClone.find('.radio-holder').remove();
-//             // sectionClone.find('img').each(function() {
-//             //     const oldSrc = $(this).attr("src");
-//             //     const imgName = oldSrc.split("assets/images/")[1];
-//             //     $(this).attr("src", "assets/clients/"+clientName+"/"+clientProjectName+"/images/" + imgName);
-//             //     if(!imagesNameList.includes(imgName)){
-//             //         imagesNameList = imagesNameList + "," + imgName;
-//             //     }
+        //             const sectionClone = $(originalSection).clone();
+        //             sectionClone.find('.radio-holder').remove();
+        //             // sectionClone.find('img').each(function() {
+        //             //     const oldSrc = $(this).attr("src");
+        //             //     const imgName = oldSrc.split("assets/images/")[1];
+        //             //     $(this).attr("src", "assets/clients/"+clientName+"/"+clientProjectName+"/images/" + imgName);
+        //             //     if(!imagesNameList.includes(imgName)){
+        //             //         imagesNameList = imagesNameList + "," + imgName;
+        //             //     }
 
-//             // });
-//             // sectionClone.find('*').each(function() {
-//             //     const classNames = $(this).attr('class');
-//             //     if (classNames) {
-//             //         classNames.split(' ').forEach((className) => {
-//             //             if (className.startsWith('theme-')) {
-//             //                 $(this).removeClass(className);
-//             //             }
-//             //         });
-//             //     }
-//             // });
+        //             // });
+        //             // sectionClone.find('*').each(function() {
+        //             //     const classNames = $(this).attr('class');
+        //             //     if (classNames) {
+        //             //         classNames.split(' ').forEach((className) => {
+        //             //             if (className.startsWith('theme-')) {
+        //             //                 $(this).removeClass(className);
+        //             //             }
+        //             //         });
+        //             //     }
+        //             // });
 
-//         processImagesAndRemoveThemeClasses(sectionClone,clientName, clientProjectName);
-
-
+        //         processImagesAndRemoveThemeClasses(sectionClone,clientName, clientProjectName);
 
 
 
-// sectionClone.find('.company_name').contents().filter(function () {
-//     return this.nodeType === 3 && this.nodeValue.includes("Company Name");
-// }).each(function () {
-//     this.nodeValue = this.nodeValue.replace(/Company Name/g, clientProjectName);
-// });
-//             pageContent += `${sectionClone.html()}\n`; // Append the updated HTML
-
-//             // pageContent += `${sectionClone.html()}\n`;
-//             // pageContent += `<div id="${sectionId}">${sectionClone.html()}</div>\n`;
-//         });
 
 
-allSectionsOfPage.forEach(section => {
+        // sectionClone.find('.company_name').contents().filter(function () {
+        //     return this.nodeType === 3 && this.nodeValue.includes("Company Name");
+        // }).each(function () {
+        //     this.nodeValue = this.nodeValue.replace(/Company Name/g, clientProjectName);
+        // });
+        //             pageContent += `${sectionClone.html()}\n`; // Append the updated HTML
 
-    const sectionId = section.id;
-    const templatePath = section.template;
+        //             // pageContent += `${sectionClone.html()}\n`;
+        //             // pageContent += `<div id="${sectionId}">${sectionClone.html()}</div>\n`;
+        //         });
 
-    let sectionClone = null;
 
-    const originalSection =
-        document.getElementById(sectionId) ||
-        document.querySelector(`[id^="${sectionId}"]`);
-const isAI = templatePath && templatePath.includes("/generated_sections/");
+        allSectionsOfPage.forEach(section => {
 
-if (originalSection && !isAI) {
+            const sectionId = section.id;
+            const templatePath = section.template;
 
-    const wrapper = $(originalSection).closest('.section-wrapper');
+            let sectionClone = null;
 
-    if (wrapper.length) {
-        sectionClone = wrapper.clone();
-    } else {
-        sectionClone = $(originalSection).clone();
-    }
+            const originalSection =
+                document.getElementById(sectionId) ||
+                document.querySelector(`[id^="${sectionId}"]`);
+            const isAI = templatePath && templatePath.includes("/generated_sections/");
 
-} else if (templatePath) {
+            if (originalSection && !isAI) {
 
-    $.ajax({
-        url: templatePath,
-        type: "GET",
-        async: false,
-success: function (html) {
+                const wrapper = $(originalSection).closest('.section-wrapper');
 
-    const parsed = $(html);
+                if (wrapper.length) {
+                    sectionClone = wrapper.clone();
+                } else {
+                    sectionClone = $(originalSection).clone();
+                }
 
-    let sectionEl = null;
+            } else if (templatePath) {
 
-    if (parsed.filter('section').length) {
-        sectionEl = parsed.filter('section').first();
-    } else if (parsed.find('section').length) {
-        sectionEl = parsed.find('section').first();
-    }
 
-    if (sectionEl) {
+                if (templatePath.includes("aig")) {
+                    request_src = "ai_gen"
+                }
+                const requestData = {
+                    request_src: request_src,
+                    section_path: templatePath,
+                    file_name: ""
+                }
 
-        // WRAP AI section (THIS IS THE FIX)
-        sectionClone = $('<div class="section-wrapper"></div>').append(sectionEl);
+                $.ajax({
+                    // url: templatePath,
+                    // type: "GET",
+                    // async: false,
+                    url: "/fetch_html_sections/",
+                    type: "POST",
+                    data: requestData,
+                    async: false,
+                    headers: {
+                        "X-CSRFToken": csrftoken
+                    },
+                    success: function (html) {
 
-    } else {
+                        const parsed = $(html);
 
-        sectionClone = $('<div class="section-wrapper"></div>').append(parsed);
-    }
-},
-        error: function () {
-            console.error("Failed to load:", templatePath);
-        }
-    });
+                        let sectionEl = null;
 
-} else if (sectionId === "default-middle_section") {
+                        if (parsed.filter('section').length) {
+                            sectionEl = parsed.filter('section').first();
+                        } else if (parsed.find('section').length) {
+                            sectionEl = parsed.find('section').first();
+                        }
 
-    // Load default section template manually
-    const defaultTemplate = "/assets/page_components/1-DO-NOT-DELETE_Default-blank-section/default-middle_section.html"; // <-- set correct path
+                        if (sectionEl) {
 
-    $.ajax({
-        url: defaultTemplate,
-        type: "GET",
-        async: false,
-        success: function (html) {
-            const parsed = $(html);
+                            // WRAP AI section (THIS IS THE FIX)
+                            sectionClone = $('<div class="section-wrapper"></div>').append(sectionEl);
 
-            if (parsed.filter('section').length) {
-                sectionClone = $('<div class="section-wrapper"></div>')
-                    .append(parsed.filter('section').first());
-            } else if (parsed.find('section').length) {
-                sectionClone = $('<div class="section-wrapper"></div>')
-                    .append(parsed.find('section').first());
+                        } else {
+
+                            sectionClone = $('<div class="section-wrapper"></div>').append(parsed);
+                        }
+                    },
+                    error: function () {
+                        console.error("Failed to load:", templatePath);
+                    }
+                });
+
+            } else if (sectionId === "default-middle_section") {
+                alert(3)
+
+                // Load default section template manually
+                const defaultTemplate = "/assets/page_components/1-DO-NOT-DELETE_Default-blank-section/default-middle_section.html"; // <-- set correct path
+
+                $.ajax({
+                    url: defaultTemplate,
+                    type: "GET",
+                    async: false,
+                    success: function (html) {
+                        const parsed = $(html);
+
+                        if (parsed.filter('section').length) {
+                            sectionClone = $('<div class="section-wrapper"></div>')
+                                .append(parsed.filter('section').first());
+                        } else if (parsed.find('section').length) {
+                            sectionClone = $('<div class="section-wrapper"></div>')
+                                .append(parsed.find('section').first());
+                        } else {
+                            sectionClone = $('<div class="section-wrapper"></div>')
+                                .append(parsed);
+                        }
+                    },
+                    error: function () {
+                        console.error("Default middle section not found");
+                    }
+                });
+
             } else {
-                sectionClone = $('<div class="section-wrapper"></div>')
-                    .append(parsed);
+                alert(4)
+                console.error("Missing section:", sectionId);
+                return;
             }
-        },
-        error: function () {
-            console.error("Default middle section not found");
-        }
-    });
+            // SAFETY CHECK
+            if (!sectionClone) return;
 
-} else {
-    console.error("Missing section:", sectionId);
-    return;
-}
-    // SAFETY CHECK
-    if (!sectionClone) return;
+            //  REMOVE EDIT MODE ELEMENTS
+            sectionClone.find('.radio-holder').remove();
 
-    //  REMOVE EDIT MODE ELEMENTS
-    sectionClone.find('.radio-holder').remove();
-
-    //  PROCESS IMAGES (VERY IMPORTANT)
-    processImagesAndRemoveThemeClasses(sectionClone, clientName, clientProjectName);
-sectionClone.find('footer').remove();
-sectionClone.find('[class*="footer"]').remove();
-sectionClone.find('[id*="footer"]').remove();
-    //  REPLACE COMPANY NAME
+            //  PROCESS IMAGES (VERY IMPORTANT)
+            processImagesAndRemoveThemeClasses(sectionClone, clientName, clientProjectName);
+            sectionClone.find('footer').remove();
+            sectionClone.find('[class*="footer"]').remove();
+            sectionClone.find('[id*="footer"]').remove();
+            //  REPLACE COMPANY NAME
             const companyElement = sectionClone.find(".company_name");
             if (companyElement.length && clientProjectName?.trim()) {
                 companyElement.html(clientProjectName);
@@ -1008,7 +1086,7 @@ sectionClone.find('[id*="footer"]').remove();
                     $(this).text(clientMobile);
                 });
             }
-           // Whtasapp
+            // Whtasapp
             // const mobile = getCookie("clientMobile");
 
             // if (mobile && mobile.trim() !== "") {
@@ -1041,18 +1119,18 @@ sectionClone.find('[id*="footer"]').remove();
             }
 
 
-    //  APPEND ONLY ONCE
-    pageContent += `${sectionClone.html()}\n`;
+            //  APPEND ONLY ONCE
+            pageContent += `${sectionClone.html()}\n`;
 
-});
-    let headerFont = $("." + globalHeader).css("font-family") || "'Roboto', sans-serif";
+        });
+        let headerFont = $("." + globalHeader).css("font-family") || "'Roboto', sans-serif";
 
-    const seoInfo = SEOData[headerCategory] || {keywords: "", description: ""};
-//whatsapp replace mobile number
-const cleanWhatsapp = (clientMobile || "").replace(/\D/g, "");
-const whatsappLink = cleanWhatsapp
-    ? `https://wa.me/${cleanWhatsapp}`
-    : "https://wa.me/";
+        const seoInfo = SEOData[headerCategory] || { keywords: "", description: "" };
+        //whatsapp replace mobile number
+        const cleanWhatsapp = (clientMobile || "").replace(/\D/g, "");
+        const whatsappLink = cleanWhatsapp
+            ? `https://wa.me/${cleanWhatsapp}`
+            : "https://wa.me/";
 
         const newPageContent = `
         <!DOCTYPE html>
@@ -1084,7 +1162,9 @@ const whatsappLink = cleanWhatsapp
             :root {
                 --site-font: ${headerFont};
             }
-            body, #wrapper, #wrapper * {
+            body,
+            #wrapper,
+            #wrapper *:not(i):not([class^="ri-"]):not([class*=" ri-"]) {
                 font-family: var(--site-font) !important;
             }
         </style>
@@ -1120,9 +1200,10 @@ const whatsappLink = cleanWhatsapp
                         $(function () {
 
                             /* Start code to load js and css files properly on local server or production server: NOte: this is the workwround, need to fix this */
-                            loadHeaderFooter("header", "client-assets/${clientName}/${clientProjectName}/header.html");
-                            loadHeaderFooter("footer", "client-assets/${clientName}/${clientProjectName}/footer.html");
+                            loadHeaderFooter("header", "/media/projects/${clientName}/${clientProjectName}/header.html");
+                            loadHeaderFooter("footer", "/media/projects/${clientName}/${clientProjectName}/footer.html");
                             /*  End code */
+
 
                             /*  Start code to load js and css files properly on Githubpages  */
                             loadHeaderFooter("header", "header.html");
@@ -1171,50 +1252,50 @@ const whatsappLink = cleanWhatsapp
         </body>
         </html>
     `;
-    if (fileName.toLowerCase() === "home") {
-        fileName = "index";
-    }
-      filesDetailsMap[`${fileName}.html`] = newPageContent;
+        if (fileName.toLowerCase() === "home") {
+            fileName = "index";
+        }
+        filesDetailsMap[`${fileName}.html`] = newPageContent;
 
     });
 
     // filteredFooterPages.push("default-middle_section");  // Add DUmmy entry to add default middle section
 
     filteredFooterPages.forEach(pageName => {
-    if (headerPages.includes(pageName)) {
-        console.log("Skipping duplicate footer page:", pageName);
-        return;
-    }
+        if (headerPages.includes(pageName)) {
+            console.log("Skipping duplicate footer page:", pageName);
+            return;
+        }
         const allSectionsOfPage = [];
         // Add header section in the page
         // if (globalHeader) allSectionsOfPage.push(globalHeader);
 
-let middleKey = null;
+        let middleKey = null;
 
-const keys = Object.keys(middleSections);
+        const keys = Object.keys(middleSections);
 
-let availableMiddleSectionsForPage = middleSections[pageName] || [];
+        let availableMiddleSectionsForPage = middleSections[pageName] || [];
 
-if (availableMiddleSectionsForPage.length > 0) {
+        if (availableMiddleSectionsForPage.length > 0) {
 
-    availableMiddleSectionsForPage.forEach(section => {
-        allSectionsOfPage.push(section);
-    });
+            availableMiddleSectionsForPage.forEach(section => {
+                allSectionsOfPage.push(section);
+            });
 
-} else {
+        } else {
 
-    console.warn("No middle section found for", pageName, "→ using default");
+            console.warn("No middle section found for", pageName, "→ using default");
 
-    allSectionsOfPage.push({
-        id: "default-middle_section",
-        template: "/assets/page_components/1-DO-NOT-DELETE_Default-blank-section/default-middle_section.html" // IMPORTANT
-    });
-}
+            allSectionsOfPage.push({
+                id: "default-middle_section",
+                template: "/assets/page_components/1-DO-NOT-DELETE_Default-blank-section/default-middle_section.html" // IMPORTANT
+            });
+        }
 
-    if (allSectionsOfPage.length === 0) {
-        alert(`No sections selected for export for ${pageName}`);
-        return;
-    }
+        if (allSectionsOfPage.length === 0) {
+            alert(`No sections selected for export for ${pageName}`);
+            return;
+        }
 
 
         // Add footer section in the page
@@ -1237,93 +1318,93 @@ if (availableMiddleSectionsForPage.length > 0) {
 
         let pageContent = '';
         var clientName = getCookie("clientName");
-        var clientProjectName =  getCookie("projectName");
+        var clientProjectName = getCookie("projectName");
 
 
-// allSectionsOfPage.forEach(sectionId => {
+        // allSectionsOfPage.forEach(sectionId => {
 
-//         // Try exact ID or prefix match
-//         let originalSection =
-//             document.getElementById(sectionId) ||
-//             document.querySelector(`[id^="${sectionId}"]`);
+        //         // Try exact ID or prefix match
+        //         let originalSection =
+        //             document.getElementById(sectionId) ||
+        //             document.querySelector(`[id^="${sectionId}"]`);
 
-//         if (!originalSection) {
-//             console.warn("Missing section in DOM:", sectionId);
-//             return;
-//         }
+        //         if (!originalSection) {
+        //             console.warn("Missing section in DOM:", sectionId);
+        //             return;
+        //         }
 
-//         const sectionClone = $(originalSection).clone();
+        //         const sectionClone = $(originalSection).clone();
 
-//         sectionClone.find(".radio-holder").remove();
+        //         sectionClone.find(".radio-holder").remove();
 
-//         processImagesAndRemoveThemeClasses(sectionClone, clientName, clientProjectName);
+        //         processImagesAndRemoveThemeClasses(sectionClone, clientName, clientProjectName);
 
-//         sectionClone.find(".company_name").contents().filter(function () {
-//             return this.nodeType === 3 &&
-//                    this.nodeValue.includes("Company Name");
-//         }).each(function () {
-//             this.nodeValue = this.nodeValue.replace(/Company Name/g, clientProjectName);
-//         });
+        //         sectionClone.find(".company_name").contents().filter(function () {
+        //             return this.nodeType === 3 &&
+        //                    this.nodeValue.includes("Company Name");
+        //         }).each(function () {
+        //             this.nodeValue = this.nodeValue.replace(/Company Name/g, clientProjectName);
+        //         });
 
-//         pageContent += `${sectionClone.html()}\n`;
-//     });
+        //         pageContent += `${sectionClone.html()}\n`;
+        //     });
 
-allSectionsOfPage.forEach(section => {
+        allSectionsOfPage.forEach(section => {
 
-    const sectionId = section.id;
-    const templatePath = section.template;
+            const sectionId = section.id;
+            const templatePath = section.template;
 
-    let sectionClone = null;
+            let sectionClone = null;
 
-    const originalSection =
-        document.getElementById(sectionId) ||
-        document.querySelector(`[id^="${sectionId}"]`);
+            const originalSection =
+                document.getElementById(sectionId) ||
+                document.querySelector(`[id^="${sectionId}"]`);
 
-    //  CASE 1: DOM exists
-    if (originalSection) {
-        sectionClone = $(originalSection).clone();
+            //  CASE 1: DOM exists
+            if (originalSection) {
+                sectionClone = $(originalSection).clone();
 
-    //  CASE 2: Load from template
-    } else if (templatePath) {
+                //  CASE 2: Load from template
+            } else if (templatePath) {
 
-        $.ajax({
-            url: templatePath,
-            type: "GET",
-            async: false,
-            success: function (html) {
-              const parsed = $(html);
+                $.ajax({
+                    url: templatePath,
+                    type: "GET",
+                    async: false,
+                    success: function (html) {
+                        const parsed = $(html);
 
-    //If section tag exists → use it
-    if (parsed.filter('section').length) {
-        sectionClone = parsed.filter('section');
-    }
-    else if (parsed.find('section').length) {
-        sectionClone = parsed.find('section').first();
-    }
-    else {
-        //fallback (wrap manually)
-        sectionClone = $('<section></section>').append(parsed);
-    }
-            },
-            error: function () {
-                console.error("Failed to load:", templatePath);
+                        //If section tag exists → use it
+                        if (parsed.filter('section').length) {
+                            sectionClone = parsed.filter('section');
+                        }
+                        else if (parsed.find('section').length) {
+                            sectionClone = parsed.find('section').first();
+                        }
+                        else {
+                            //fallback (wrap manually)
+                            sectionClone = $('<section></section>').append(parsed);
+                        }
+                    },
+                    error: function () {
+                        console.error("Failed to load:", templatePath);
+                    }
+                });
+
+            } else {
+                console.error("Missing section:", sectionId);
+                return;
             }
-        });
 
-    } else {
-        console.error("Missing section:", sectionId);
-        return;
-    }
+            if (!sectionClone) return;
 
-    if (!sectionClone) return;
+            //  CLEAN EDIT MODE UI
+            sectionClone.find(".radio-holder").remove();
 
-    //  CLEAN EDIT MODE UI
-    sectionClone.find(".radio-holder").remove();
+            //  PROCESS IMAGES (THIS FIXES YOUR BROKEN IMAGE ISSUE)
+            processImagesAndRemoveThemeClasses(sectionClone, clientName, clientProjectName);
 
-    //  PROCESS IMAGES (THIS FIXES YOUR BROKEN IMAGE ISSUE)
-    processImagesAndRemoveThemeClasses(sectionClone, clientName, clientProjectName);
-
-    //  REPLACE COMPANY NAME
+            //  REPLACE COMPANY NAME
             const companyElement = sectionClone.find(".company_name");
             if (companyElement.length && clientProjectName?.trim()) {
                 companyElement.html(clientProjectName);
@@ -1341,7 +1422,7 @@ allSectionsOfPage.forEach(section => {
                     $(this).text(clientMobile);
                 });
             }
-           // Whtasapp
+            // Whtasapp
             // const mobile = getCookie("clientMobile");
 
             // if (mobile && mobile.trim() !== "") {
@@ -1373,15 +1454,15 @@ allSectionsOfPage.forEach(section => {
                 });
             }
 
-    //  FINAL APPEND
-    pageContent += `${sectionClone.html()}\n`;
+            //  FINAL APPEND
+            pageContent += `${sectionClone.html()}\n`;
 
-});
-let headerFont = $("." + globalHeader).css("font-family") || "'Roboto', sans-serif";
-    const seoInfo = SEOData[headerCategory] || {keywords: "", description: ""};
+        });
+        let headerFont = $("." + globalHeader).css("font-family") || "'Roboto', sans-serif";
+        const seoInfo = SEOData[headerCategory] || { keywords: "", description: "" };
 
-const cleanWhatsapp = (clientMobile || "").replace(/\D/g, "");
-const whatsappLink = cleanWhatsapp ? `https://wa.me/${cleanWhatsapp}` : "#";
+        const cleanWhatsapp = (clientMobile || "").replace(/\D/g, "");
+        const whatsappLink = cleanWhatsapp ? `https://wa.me/${cleanWhatsapp}` : "#";
 
         const newPageContent = `
         <!DOCTYPE html>
@@ -1416,7 +1497,9 @@ const whatsappLink = cleanWhatsapp ? `https://wa.me/${cleanWhatsapp}` : "#";
             :root {
                 --site-font: ${headerFont};
             }
-            body, #wrapper, #wrapper * {
+            body,
+            #wrapper,
+            #wrapper *:not(i):not([class^="ri-"]):not([class*=" ri-"]) {
                 font-family: var(--site-font) !important;
             }
         </style>
@@ -1454,8 +1537,8 @@ const whatsappLink = cleanWhatsapp ? `https://wa.me/${cleanWhatsapp}` : "#";
                         $(function () {
 
                             /* Start code to load js and css files properly on local server or production server: NOte: this is the workwround, need to fix this */
-                            loadHeaderFooter("header", "client-assets/${clientName}/${clientProjectName}/header.html");
-                            loadHeaderFooter("footer", "client-assets/${clientName}/${clientProjectName}/footer.html");
+                            loadHeaderFooter("header", "/media/projects/${clientName}/${clientProjectName}/header.html");
+                            loadHeaderFooter("footer", "/media/projects/${clientName}/${clientProjectName}/footer.html");
                             /*  End code */
 
                             /*  Start code to load js and css files properly on Githubpages  */
@@ -1505,7 +1588,7 @@ const whatsappLink = cleanWhatsapp ? `https://wa.me/${cleanWhatsapp}` : "#";
         </body>
         </html>
     `;
-    filesDetailsMap[`${fileName}.html`] = newPageContent;
+        filesDetailsMap[`${fileName}.html`] = newPageContent;
 
     });
     filesDetailsMap["imagesNameList"] = imagesNameList;
@@ -1513,13 +1596,14 @@ const whatsappLink = cleanWhatsapp ? `https://wa.me/${cleanWhatsapp}` : "#";
 }
 function uploadFilesData(filesDetailsMap) {
     displayLoadingMessage();
- $("#uploadBtn").show();
- $("#demouploadBtn").show();
-    filesDetailsMap["clientName"] =  getCookie("clientName");
-    filesDetailsMap["clientProjectName"] =  getCookie("projectName");
+    $("#uploadBtn").show();
+    $("#publishBtnSales").show();
+
+    filesDetailsMap["clientName"] = getCookie("clientName");
+    filesDetailsMap["clientProjectName"] = getCookie("projectName");
     // filesDetailsMap["reqFor"] =  "preview";
-console.log("clientName:", getCookie("clientName"));
-console.log("projectName:", getCookie("projectName"));
+    console.log("clientName:", getCookie("clientName"));
+    console.log("projectName:", getCookie("projectName"));
     $.ajax({
         type: 'POST',
         url: "indexOld/",
@@ -1531,69 +1615,70 @@ console.log("projectName:", getCookie("projectName"));
             "X-CSRFToken": getCookie("csrftoken"),  // don't forget to include the 'getCookie' function
         },
         success: function (data) {
-           showCustomAlertBox('success', 'Uploaded the data');
-        //   alert("Uploaded the data");
-          $('#loading-message').remove();
+            //    showCustomAlertBox('success', 'Uploaded the data');
+            //   alert("Uploaded the data");
+            $('#loading-message').remove();
             // Clear all cookies
             // clearAllCookies();
             // location.reload();
-        // $('#openIndex').trigger('click', [getCookie("clientName"), getCookie("projectName"),true]);
-        openPreview();
+            // $('#openIndex').trigger('click', [getCookie("clientName"), getCookie("projectName"),true]);
+            openPreview();
         },
         error: function (xhr, errmsg, err) {
-            console.log("Error----"+ xhr.responseText);
+            console.log("Error----" + xhr.responseText);
             $('#loading-message').remove();
         }
-      });
+    });
 }
 // for preview in mobile and desktop view in one frame
-        function openPreview() {
+function openPreview() {
 
-            var filename = "index.html";
-            var clientName = getCookie('clientName');
-            var clientProjectName = getCookie('projectName');
+    var filename = "index.html";
+    var clientName = getCookie('clientName');
+    var clientProjectName = getCookie('projectName');
 
-            setCookie('preview', 'true', 7);
-            var newTab = window.open("", "_blank");
-            $.ajax({
-                type: 'POST',
-                url: "es/",
-                data: {
-                    clientName: clientName,
-                    clientProjectName: clientProjectName,
-                    srcReq: filename
-                },
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest"
-                },
-                success: function (data) {
-                    injectPreviewShell(newTab, data);
-                    // var newTab = window.open(`/es/?srcReq=${filename}`, "_blank");
+    setCookie('preview', 'true', 7);
+    var newTab = window.open("", "_blank");
+    $.ajax({
+        type: 'POST',
+        url: "es/",
+        data: {
+            clientName: clientName,
+            clientProjectName: clientProjectName,
+            srcReq: filename
+        },
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        },
 
-                    // var interval = setInterval(function () {
-                    //     try {
-                    //         if (newTab.document && newTab.document.readyState === 'complete') {
-                    //             clearInterval(interval);
-                    //             injectPreviewShell(newTab, data);
-                    //         }
-                    //     } catch (e) {}
-                    // }, 50);
-                },
-                error: function (err) {
-                    alert(err.responseJSON?.errorMessage || 'Something went wrong');
-                }
-            });
+        success: function (data) {
+            injectPreviewShell(newTab, data);
+            // var newTab = window.open(`/es/?srcReq=${filename}`, "_blank");
 
-            return false;
+            // var interval = setInterval(function () {
+            //     try {
+            //         if (newTab.document && newTab.document.readyState === 'complete') {
+            //             clearInterval(interval);
+            //             injectPreviewShell(newTab, data);
+            //         }
+            //     } catch (e) {}
+            // }, 50);
+        },
+        error: function (err) {
+            alert(err.responseJSON?.errorMessage || 'Something went wrong');
+        }
+    });
 
-            /* ================= PREVIEW SHELL ================= */
+    return false;
 
-            function injectPreviewShell(newTab, pageHtml) {
-                const iconLink = newTab.document.createElement("link");
-                iconLink.rel = "stylesheet";
-                iconLink.href = "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css";
-                newTab.document.head.appendChild(iconLink);
-                newTab.document.body.innerHTML = `
+    /* ================= PREVIEW SHELL ================= */
+
+    function injectPreviewShell(newTab, pageHtml) {
+        const iconLink = newTab.document.createElement("link");
+        iconLink.rel = "stylesheet";
+        iconLink.href = "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css";
+        newTab.document.head.appendChild(iconLink);
+        newTab.document.body.innerHTML = `
                     <style>
                     body {
                         margin: 0;
@@ -1775,52 +1860,52 @@ console.log("projectName:", getCookie("projectName"));
                     </div>
                 `;
 
-                const desktopIframe = newTab.document.getElementById('desktopIframe');
-                const mobileIframe  = newTab.document.getElementById('mobileIframe');
+        const desktopIframe = newTab.document.getElementById('desktopIframe');
+        const mobileIframe = newTab.document.getElementById('mobileIframe');
 
-                desktopIframe.onload = () => hideTopBar(desktopIframe.contentDocument);
-                mobileIframe.onload  = () => hideTopBar(mobileIframe.contentDocument);
+        desktopIframe.onload = () => hideTopBar(desktopIframe.contentDocument);
+        mobileIframe.onload = () => hideTopBar(mobileIframe.contentDocument);
 
-                desktopIframe.contentDocument.open();
-                desktopIframe.contentDocument.write(pageHtml);
-                desktopIframe.contentDocument.close();
+        desktopIframe.contentDocument.open();
+        desktopIframe.contentDocument.write(pageHtml);
+        desktopIframe.contentDocument.close();
 
-                mobileIframe.contentDocument.open();
-                mobileIframe.contentDocument.write(pageHtml);
-                mobileIframe.contentDocument.close();
+        mobileIframe.contentDocument.open();
+        mobileIframe.contentDocument.write(pageHtml);
+        mobileIframe.contentDocument.close();
 
-                const desktopBtn = newTab.document.getElementById('desktopBtn');
-                const mobileBtn  = newTab.document.getElementById('mobileBtn');
-                const desktopView = newTab.document.getElementById('desktopView');
-                const mobileView  = newTab.document.getElementById('mobileView');
+        const desktopBtn = newTab.document.getElementById('desktopBtn');
+        const mobileBtn = newTab.document.getElementById('mobileBtn');
+        const desktopView = newTab.document.getElementById('desktopView');
+        const mobileView = newTab.document.getElementById('mobileView');
 
-                desktopBtn.onclick = () => {
-                    desktopView.classList.remove('hidden');
-                    mobileView.classList.add('hidden');
-                    desktopBtn.classList.add('active');
-                    mobileBtn.classList.remove('active');
-                };
+        desktopBtn.onclick = () => {
+            desktopView.classList.remove('hidden');
+            mobileView.classList.add('hidden');
+            desktopBtn.classList.add('active');
+            mobileBtn.classList.remove('active');
+        };
 
-                mobileBtn.onclick = () => {
-                    mobileView.classList.remove('hidden');
-                    desktopView.classList.add('hidden');
-                    mobileBtn.classList.add('active');
-                    desktopBtn.classList.remove('active');
-                };
+        mobileBtn.onclick = () => {
+            mobileView.classList.remove('hidden');
+            desktopView.classList.add('hidden');
+            mobileBtn.classList.add('active');
+            desktopBtn.classList.remove('active');
+        };
+    }
+
+    function hideTopBar(doc) {
+        let tries = 0;
+        const i = setInterval(() => {
+            const bar = doc.getElementById('top-bar');
+            if (bar) {
+                bar.style.display = 'none';
+                clearInterval(i);
             }
-
-            function hideTopBar(doc) {
-                let tries = 0;
-                const i = setInterval(() => {
-                    const bar = doc.getElementById('top-bar');
-                    if (bar) {
-                        bar.style.display = 'none';
-                        clearInterval(i);
-                    }
-                    if (++tries > 50) clearInterval(i);
-                }, 100);
-            }
-        }
+            if (++tries > 50) clearInterval(i);
+        }, 100);
+    }
+}
 
 
 
@@ -1896,8 +1981,8 @@ function generateMenu(mainPages, subPages) {
                             aria-haspopup="true" aria-expanded="false">${cleanedMainPage}</a>
                         <ul class="dropdown-menu">
                         ${subPages[mainPage].map(subPage =>
-                            `<li><a href="${toFileName(subPage)}.html">${toDisplayName(subPage)}</a></li>`
-                        ).join('')}
+                    `<li><a href="${toFileName(subPage)}.html">${toDisplayName(subPage)}</a></li>`
+                ).join('')}
                         </ul>
                     </li>`;
             } else {
@@ -1906,7 +1991,8 @@ function generateMenu(mainPages, subPages) {
                 // const cleanedMainPageWithoutSpace = cleanedMainPage.replace(/ /g, "_");
                 // menuContent += `<li><a href="${cleanedMainPageWithoutSpace}.html">${cleanedMainPage}</a></li>`;
 
-                menuContent += `<li><a href="${toFileName(cleanedMainPage)}.html">${toDisplayName(cleanedMainPage)}</a></li>`;            }
+                menuContent += `<li><a href="${toFileName(cleanedMainPage)}.html">${toDisplayName(cleanedMainPage)}</a></li>`;
+            }
         }
     });
     menuContent += '</ul>';
@@ -1938,7 +2024,7 @@ function generateFooterLinks() {
 
         const footerData = {
             title: footerTitle,
-           links: footerLinks.map(link => {
+            links: footerLinks.map(link => {
                 return {
                     name: toDisplayName(link),
                     url: toFileName(link)
@@ -1954,68 +2040,68 @@ function generateFooterLinks() {
 
 
 // Theme Selector code
-            let selectedThemeClass = '';
+let selectedThemeClass = '';
 
-            const themes = {
-            'theme-1': { primary: '#0f6979', secondary: '#ffc000', tertiary: '#ffffff' },
-            'theme-2': { primary: '#283259', secondary: '#1da6a6', tertiary: '#ffffff' },
-            'theme-3': { primary: '#1d4d13', secondary: '#f4a300', tertiary: '#ffffff' },
-            'theme-4': { primary: '#ffc000', secondary: '#ffffff', tertiary: '#000000' },
-            'theme-5': { primary: '#f0f8ff', secondary: '#59bb2c', tertiary: '#000000' },
-            'theme-6': { primary: '#0caa85', secondary: '#f4a300', tertiary: '#ffffff' },
-            };
+const themes = {
+    'theme-1': { primary: '#0f6979', secondary: '#ffc000', tertiary: '#ffffff' },
+    'theme-2': { primary: '#283259', secondary: '#1da6a6', tertiary: '#ffffff' },
+    'theme-3': { primary: '#1d4d13', secondary: '#f4a300', tertiary: '#ffffff' },
+    'theme-4': { primary: '#ffc000', secondary: '#ffffff', tertiary: '#000000' },
+    'theme-5': { primary: '#f0f8ff', secondary: '#59bb2c', tertiary: '#000000' },
+    'theme-6': { primary: '#0caa85', secondary: '#f4a300', tertiary: '#ffffff' },
+};
 
-            // Function to update the theme color preview
-            function updateThemePreview(theme) {
-            const colors = themes[theme] || { primary: '#ffffff', secondary: '#000000', tertiary: '#ffffff' };
-            $('#theme-preview .primary').css('background-color', colors.primary);
-            $('#theme-preview .secondary').css('background-color', colors.secondary);
-            $('#theme-preview .tertiary').css('background-color', colors.tertiary);
-            }
+// Function to update the theme color preview
+function updateThemePreview(theme) {
+    const colors = themes[theme] || { primary: '#ffffff', secondary: '#000000', tertiary: '#ffffff' };
+    $('#theme-preview .primary').css('background-color', colors.primary);
+    $('#theme-preview .secondary').css('background-color', colors.secondary);
+    $('#theme-preview .tertiary').css('background-color', colors.tertiary);
+}
 
-            // When dropdown value changes
-            $('#theme-dropdown').on('change', function () {
-            selectedThemeClass = $(this).val();
-            if (selectedThemeClass) {
-                updateThemePreview(selectedThemeClass);
-                $('#theme-preview').show();
-            } else {
-                $('#theme-preview').hide();
-            }
-            });
+// When dropdown value changes
+$('#theme-dropdown').on('change', function () {
+    selectedThemeClass = $(this).val();
+    if (selectedThemeClass) {
+        updateThemePreview(selectedThemeClass);
+        $('#theme-preview').show();
+    } else {
+        $('#theme-preview').hide();
+    }
+});
 
-            // When switching to the Theme tab
-            $('a[href="#tab-theme"]').on('shown.bs.tab', function () {
-            // Set default theme if none selected
-            if (!selectedThemeClass) {
-                selectedThemeClass = 'theme-1';
-                $('#theme-dropdown').val('theme-1');
-            }
-            updateThemePreview(selectedThemeClass);
-            $('#theme-preview').show();
-            });
+// When switching to the Theme tab
+$('a[href="#tab-theme"]').on('shown.bs.tab', function () {
+    // Set default theme if none selected
+    if (!selectedThemeClass) {
+        selectedThemeClass = 'theme-1';
+        $('#theme-dropdown').val('theme-1');
+    }
+    updateThemePreview(selectedThemeClass);
+    $('#theme-preview').show();
+});
 
-            // On export button click
-            $('#export-btn').off('click').on('click', function () {
+// On export button click
+$('#export-btn').off('click').on('click', function () {
 
-                const clientName = getCookie("clientName");
-                const projectName = getCookie("projectName");
-                let theme = selectedThemeClass || 'theme-1';
+    const clientName = getCookie("clientName");
+    const projectName = getCookie("projectName");
+    let theme = selectedThemeClass || 'theme-1';
 
-                if (!clientName || !projectName) {
-                    alert("Client and Project details missing. Please fill them first.");
-                    return;
-                }
+    if (!clientName || !projectName) {
+        alert("Client and Project details missing. Please fill them first.");
+        return;
+    }
 
-                if (!theme) {
-                    theme = 'theme-1';
-                    setCookie('selectedTheme', theme, 7);
-                    console.log('No theme selected. Defaulting to theme-1.');
-                }
+    if (!theme) {
+        theme = 'theme-1';
+        setCookie('selectedTheme', theme, 7);
+        console.log('No theme selected. Defaulting to theme-1.');
+    }
 
-                // preview handled by preview shell now
-                createHTMLFilesDataForWebsiteLinks(theme);
-            });
+    // preview handled by preview shell now
+    createHTMLFilesDataForWebsiteLinks(theme);
+});
 
 // $('#export-btn').on('click', function () {
 

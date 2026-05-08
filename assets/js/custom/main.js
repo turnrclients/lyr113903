@@ -74,7 +74,7 @@ $(document).ajaxStop(function () {
 
         restoreMiddleSectionsForCurrentPage();
          moveSelectedSectionsOnTop();
-    }, 100);
+    }, 300);
 });
 // to show export project button after checking globalHeader & globalFooter available in cookies
 
@@ -100,10 +100,8 @@ const checkInterval = setInterval(function () {
 
 
 function loadAllRequiredContents(){
-
     const components = document.querySelectorAll(".lazy-load");
     let loadedCount = 0;
-
     components.forEach(component => {
 
         const elementId = component.id;
@@ -163,6 +161,7 @@ function loadContent(elementId, fileName) {
 
         applyDynamicFonts();
         addCheckbox(elementId);
+        toggleGenerateButton(elementId);
         initScrollAnimations();
     });
 if (CURRENT_MODE === 'design') {
@@ -213,7 +212,7 @@ $(document).ready(function() {
         $('.template-card').first().addClass('active');
 
         $('#clientDetailsDisplay').hide();
-        $('#backBtn, #previewBtn, #publishBtn ,#export-btn,#uploadBtn',"#demouploadBtn").hide();
+        $('#backBtn, #previewBtn, #publishBtn ,#export-btn,#uploadBtn,#publishBtnSales').hide();
     }
 
 });
@@ -224,10 +223,10 @@ $(document).ready(function() {
 function showActionButtons(selectedOption) {
     if (selectedOption === 'existing') {
         $('#backBtn, #previewBtn ,#export-btn').show();//New code
-        $('#publishBtn , #uploadBtn').hide();
+        $('#publishBtn , #uploadBtn,publishBtnSales',).hide();
     } else if (selectedOption === 'customize') {
 
-        $('#backBtn, #previewBtn, #publishBtn ,#uploadBtn',"#demouploadBtn").show();
+        $('#backBtn, #previewBtn, #publishBtn ,#uploadBtn,publishBtnSales' ).show();
     }
 }
 
@@ -364,7 +363,7 @@ function resetProjectUI() {
 
     $('.pages-for').prop('checked', false);
 
-    $('#backBtn, #previewBtn, #publishBtn, #export-btn, #uploadBtn').hide();
+    $('#backBtn, #previewBtn, #publishBtn, #export-btn, #uploadBtn,publishBtnSales').hide();
 
     $('input[name="templateOption"]').prop('checked', false);
     $('input[name="templateOption"]').first().prop('checked', true);
@@ -531,14 +530,14 @@ else if (selectedValue === 'footer') {
     }, 100);
 }
 
-
-$('.pages-for').off('click').on('click', function () {
+// $('.pages-for').off('click').on('click', function () {
+$(document).off('change', '.pages-for').on('change', '.pages-for', function () {
 
     const selectedValue = $(this).val();
 
     CURRENT_MODE = selectedValue;
 
-    $(this).prop('checked', true);
+    // $(this).prop('checked', true);
 
     $('#header-menu-details').hide();
     $('#footer-menu-details').hide();
@@ -547,13 +546,18 @@ $('.pages-for').off('click').on('click', function () {
     ChoosePagesForHeaderFooter(selectedValue);
     setTimeout(() => {
         moveSelectedSectionsOnTop();
+        loadSavedSections("headerAndFooterAIGeneratedSections");
     }, 100);
+
 });
 
 $(document).ready(function() {
     const selectedValue = $('.pages-for:checked').val();
     if (selectedValue) {
         ChoosePagesForHeaderFooter(selectedValue);
+        setTimeout(() => {
+           loadSavedSections("headerAndFooterAIGeneratedSections");
+        }, 200);
     }
 });
 
@@ -657,20 +661,46 @@ function restoreHeaderFooterSelection() {
     const savedHeader = getCookie(GLOBAL_HEADER_COOKIE);
     const savedFooter = getCookie(GLOBAL_FOOTER_COOKIE);
 
+    // ===== HEADER =====
     if (savedHeader) {
+
         const headerObj = JSON.parse(savedHeader);
         const el = $("#" + headerObj.id + "_component");
 
         el.data('restoring', true);
         el.prop("checked", true).trigger("change");
+
+        if (headerObj.isAI) {
+            const container = $("#" + headerObj.id);
+
+            container.find(".ai-version-checkbox")
+                .data('restoring', true)
+                .prop("checked", true)
+                .trigger("change");
+        }
+
+        toggleGenerateButton(headerObj.id);
     }
 
+    // ===== FOOTER =====
     if (savedFooter) {
+
         const footerObj = JSON.parse(savedFooter);
         const el = $("#" + footerObj.id + "_component");
 
         el.data('restoring', true);
         el.prop("checked", true).trigger("change");
+
+        if (footerObj.isAI) {
+            const container = $("#" + footerObj.id);
+
+            container.find(".ai-version-checkbox")
+                .data('restoring', true)
+                .prop("checked", true)
+                .trigger("change");
+        }
+
+        toggleGenerateButton(footerObj.id);
     }
 }
 // Apply dynamic fonts
@@ -714,7 +744,6 @@ function updateSectionTemplate(sectionId) {
 
     if (isAI) {
 
-        // ✅ ALWAYS prefer AI template
         templatePath =
             container.find(".ai-generated-wrapper").attr("data-template") ||
             container.find("[data-ai-template]").attr("data-ai-template") ||
@@ -723,7 +752,6 @@ function updateSectionTemplate(sectionId) {
 
     } else {
 
-        // ✅ ALWAYS fallback to original
         templatePath =
             container.attr("data-template") ||
             sectionFileMap?.[sectionId]?.original ||
@@ -731,74 +759,69 @@ function updateSectionTemplate(sectionId) {
 
     }
 
-    // 🚨 HARD SAFETY (IMPORTANT)
     if (!templatePath) {
         console.warn("⚠ Missing templatePath for:", sectionId, "AI:", isAI);
     }
 
     console.log("✔ FINAL TEMPLATE PATH:", templatePath);
 
-    // ===== REMOVE OLD ENTRY (VERY IMPORTANT) =====
     PAGE_STATE[selectedPage] = PAGE_STATE[selectedPage].filter(sec => sec.id !== sectionId);
 
-    // ===== ADD UPDATED ENTRY =====
     PAGE_STATE[selectedPage].push({
         id: sectionId,
         template: templatePath
     });
 
-    // ===== FORCE COOKIE UPDATE =====
     const updatedCookie = JSON.stringify(PAGE_STATE);
     setCookie(GLOBAL_MIDDLE_SECTIONS_COOKIE, updatedCookie, 7);
 
-    // ===== VERIFY WRITE =====
-    console.log("✅ COOKIE UPDATED:", getCookie(GLOBAL_MIDDLE_SECTIONS_COOKIE));
+    console.log(" COOKIE UPDATED:", getCookie(GLOBAL_MIDDLE_SECTIONS_COOKIE));
 }
 
 function addCheckbox(elementId, middleSectionCategoryId) {
+
+
     const isHeader = elementId.startsWith('header-');
     const isFooter = elementId.startsWith('footer-');
     const isDesignMode = CURRENT_MODE === 'design';
+
     // const sectionName = $("#"+elementId).attr("name");
     // if(elementId=="home-1") {
     //     alert(sectionName);
     // }
-    const Checkbox = `
-            <label class="radio-holder ${(!isHeader && !isFooter && !isDesignMode) ? 'disabled' : ''}">
+const Checkbox = `
+<label class="radio-holder ${(!isHeader && !isFooter && !isDesignMode) ? 'disabled' : ''}">
 
-            <input type="checkbox"
-            name="${middleSectionCategoryId}"
-            value="${elementId}"
-            id="${elementId}_component"
-            class="section-checkbox"
-            ${(!isHeader && !isFooter && !isDesignMode) ? 'disabled' : ''}>
+    <input type="checkbox"
+        name="${middleSectionCategoryId}"
+        value="${elementId}"
+        id="${elementId}_component"
+        class="section-checkbox"
+        ${(!isHeader && !isFooter && !isDesignMode) ? 'disabled' : ''}>
 
-            ${elementId}
+    ${elementId}
 
-            ${(!isHeader && !isFooter) ? `
-            <span class="ai-toggle" style="display:none;margin:0 10px;align-items:center;gap:8px;">
+    <span class="ai-toggle" style="display:none;margin:0 10px;align-items:center;gap:8px;">
 
-            <i class="ri-arrow-left-right-line ai-switch-icon"></i>
-
-            <input type="checkbox"
+        <input type="checkbox"
             class="ai-version-checkbox"
             data-target="${elementId}">
-            AI generated
-            </span>
-            ` : ``}
+        AI generated
+    </span>
 
-            ${(!isHeader && !isFooter) ? `
-            <button type="button"
-            class="generate-btn"
-            onclick="generateContent('${elementId}')">
-            <span><i class="ri-magic-fill"></i></span> Generate Content
-            </button>
-            ` : ``}
+    <button type="button"
+        class="generate-btn"
+        data-target="${elementId}"
+        disabled
+        onclick="generateContent('${elementId}')">
+        Generate Content
+    </button>
 
-            </label>
-            `;
+</label>
+`;
 
     $("#" + elementId).prepend(Checkbox);
+
     // AI checkbox toggle behaviour
 //     $("#" + elementId).on("change",".ai-version-checkbox",function(){
 
@@ -869,6 +892,7 @@ if (isAI) {
     handleSectionSelection(originalCheckbox);
    updateSectionTemplate(sectionId);
        setGlobalVariablesInLocalStorage(sectionId);
+toggleGenerateButton(sectionId);
 
 });
     // Onlick event of Checkbox related to headers, footers or mid-sections
@@ -876,14 +900,17 @@ $("#" + elementId + "_component").off('change').on('change', function () {
 
     const checkbox = $(this);
 
-    if (checkbox.data('restoring')) {
-        checkbox.removeData('restoring');
-        return;
-    }
+if (checkbox.data('restoring')) {
+    checkbox.removeData('restoring');
+
+    toggleGenerateButton(checkbox.val());
+
+    return;
+}
 
     const selectedId = checkbox.val();
     const isChecked = checkbox.is(':checked');
-
+    toggleGenerateButton(selectedId);
     const isHeader = selectedId.startsWith('header');
     const isFooter = selectedId.startsWith('footer');
 
@@ -952,6 +979,13 @@ $("#" + elementId + "_component").off('change').on('change', function () {
             $('#footer-menu-details').hide();
             $('#footer-dropdown-populate-area').empty();
         }
+        $(`.${type}s_container .component`).each(function(){
+            const el = $(this);
+            el.find(".ai-version-checkbox").prop("checked", false);
+            el.attr("data-ai-selected", "false");
+            el.find(".ai-generated-wrapper").hide();
+            el.children("section, footer, div").first().show();
+        });
 
         $('#localStorageTagName').val('');
         saveData(data);
@@ -962,9 +996,10 @@ $("#" + elementId + "_component").off('change').on('change', function () {
     if (!isChecked && type) {
 
         checkbox.prop('checked', true);
-
+        const container = $("#" + selectedId);
+        const isAISelected = container.find(".ai-version-checkbox").is(":checked");
         showModal(
-            `Are you sure you want to deselect this ${type}? All designed pages related to that ${type} will be lost.`,
+                 `Are you sure you want to deselect this ${type}${isAISelected ? " (AI Generated)" : ""}? All designed pages related to that ${type} will be lost.`,
             () => {
                 checkbox.prop('checked', false);
                 clearTypeData(type);
@@ -1026,6 +1061,7 @@ $("#" + elementId + "_component").off('change').on('change', function () {
 
     handleSectionSelection(checkbox);
     setGlobalVariablesInLocalStorage(selectedId);
+toggleGenerateButton(selectedId);
 });
 
 }
@@ -1045,11 +1081,25 @@ function handleSectionSelection(currentID) {
             displayAreaForSelectedThemesofHeadersMenu(selectedId);
 
             const container = $("#" + selectedId);
-            const templatePath = container.attr("data-template") || "";
+            const isAI = container.find(".ai-version-checkbox").is(":checked");
+
+            let templatePath = "";
+
+            if (isAI) {
+                templatePath =
+                    container.find(".ai-generated-wrapper").attr("data-template") ||
+                    sectionFileMap[selectedId]?.final ||
+                    "";
+            } else {
+                templatePath =
+                    container.attr("data-template") ||
+                    "";
+            }
 
             const headerObj = {
                 id: selectedId,
-                template: templatePath
+                template: templatePath,
+                isAI: isAI
             };
 
             setCookie(GLOBAL_HEADER_COOKIE, JSON.stringify(headerObj), 7);
@@ -1084,11 +1134,25 @@ function handleSectionSelection(currentID) {
             populateFooterDropdowns();
 
             const container = $("#" + selectedId);
-            const templatePath = container.attr("data-template") || "";
+            const isAI = container.find(".ai-version-checkbox").is(":checked");
+
+            let templatePath = "";
+
+            if (isAI) {
+                templatePath =
+                    container.find(".ai-generated-wrapper").attr("data-template") ||
+                    sectionFileMap[selectedId]?.final ||
+                    "";
+            } else {
+                templatePath =
+                    container.attr("data-template") ||
+                    "";
+            }
 
             const footerObj = {
                 id: selectedId,
-                template: templatePath
+                template: templatePath,
+                 isAI: isAI
             };
 
             setCookie(GLOBAL_FOOTER_COOKIE, JSON.stringify(footerObj), 7);
@@ -1135,126 +1199,132 @@ function handleSectionSelection(currentID) {
 
 function setGlobalVariablesInLocalStorage(selectedId) {
 
-        const middleSectionCategories = [];
-        $('#section-filter .dropdown-menu li a').each(function () {
-            const category = $(this).data('value');
-            if (category) {
-                middleSectionCategories.push(category);
-            }
-        });
-    const isChecked = $(`#${selectedId}_component`).is(':checked');
+    const middleSectionCategories = [];
+
+    $('#section-filter .dropdown-menu li a').each(function () {
+        const category = $(this).data('value');
+        if (category) middleSectionCategories.push(category);
+    });
+
+    const container = $("#" + selectedId);
+
+    const isChecked =
+        $(`#${selectedId}_component`).is(':checked') ||
+        container.find(".ai-version-checkbox").is(":checked");
+
     function showCustomAlert(message, type) {
-        const alert = $('<div></div>').addClass(`custom-alert ${type}`).html(`${message} <button class="close">&times;</button>`);
+        const alert = $('<div></div>')
+            .addClass(`custom-alert ${type}`)
+            .html(`${message} <button class="close">&times;</button>`);
+
         $('#alert-container').append(alert);
+
         alert.find('.close').on('click', function () {
             alert.remove();
         });
+
         setTimeout(() => {
             alert.fadeOut(500, function () {
                 $(this).remove();
             });
         }, 1000);
     }
-if (selectedId.indexOf("header") === 0) {
 
-    if (isChecked) {
+    if (selectedId.indexOf("header") === 0) {
 
-        const container = $("#" + selectedId);
-        const templatePath = container.attr("data-template") || "";
+        if (isChecked) {
 
-        const headerObj = {
-            id: selectedId,
-            template: templatePath
-        };
+            const isAI = container.find(".ai-version-checkbox").is(":checked");
 
-        setCookie(GLOBAL_HEADER_COOKIE, JSON.stringify(headerObj), 7);
+            let templatePath = isAI
+                ? container.find(".ai-generated-wrapper").attr("data-template") || sectionFileMap[selectedId]?.final || ""
+                : container.attr("data-template") || sectionFileMap[selectedId]?.original || "";
 
-        showCustomAlert(`"${selectedId}" template is selected.`, 'success');
-    }
-} else if (selectedId.indexOf("footer") === 0) {
+            const headerObj = {
+                id: selectedId,
+                template: templatePath,
+                isAI: isAI
+            };
 
-    if (isChecked) {
+            setCookie(GLOBAL_HEADER_COOKIE, JSON.stringify(headerObj), 7);
 
-        const container = $("#" + selectedId);
-        const templatePath = container.attr("data-template") || "";
+            showCustomAlert(`"${selectedId}" template is selected.`, 'success');
+        }
 
-        const footerObj = {
-            id: selectedId,
-            template: templatePath
-        };
+    } else if (selectedId.indexOf("footer") === 0) {
 
-        setCookie(GLOBAL_FOOTER_COOKIE, JSON.stringify(footerObj), 7);
+        if (isChecked) {
 
-        showCustomAlert(`"${selectedId}" template is selected.`, 'success');
-    }
-}else if (middleSectionCategories.some(category => selectedId.startsWith(category))) {
-        let selectedPage = $('#localStorageTagName').val();
-        // const lastPartOfPage = selectedPage.split('_').pop();
+            const isAI = container.find(".ai-version-checkbox").is(":checked");
+
+            let templatePath = isAI
+                ? container.find(".ai-generated-wrapper").attr("data-template") || sectionFileMap[selectedId]?.final || ""
+                : container.attr("data-template") || sectionFileMap[selectedId]?.original || "";
+
+            const footerObj = {
+                id: selectedId,
+                template: templatePath,
+                isAI: isAI
+            };
+
+            setCookie(GLOBAL_FOOTER_COOKIE, JSON.stringify(footerObj), 7);
+
+            showCustomAlert(`"${selectedId}" template is selected.`, 'success');
+        }
+
+    } else if (middleSectionCategories.some(category => selectedId.startsWith(category))) {
+
+        let selectedPage = $('#localStorageTagName').val() || "index.html";
+
         const selectedMiddleSections = getCookie(GLOBAL_MIDDLE_SECTIONS_COOKIE) || "{}";
         let middleSectionsObject = JSON.parse(selectedMiddleSections);
-        const newVal = selectedId;
-        // alert(selectedId);
-if (isChecked) {
 
-    //  GET TEMPLATE PATH FROM DOM
-    let element =
-        document.getElementById(selectedId) ||
-        document.querySelector(`[id^="${selectedId}"]`);
+        if (isChecked) {
 
-const container = $("#" + selectedId);
+            const isAI = container.find(".ai-version-checkbox").is(":checked");
 
-let templatePath = "";
-const isAI = container.find(".ai-version-checkbox").is(":checked");
+            let templatePath = isAI
+                ? container.find(".ai-generated-wrapper").attr("data-template") || sectionFileMap[selectedId]?.final || ""
+                : container.attr("data-template") || sectionFileMap[selectedId]?.original || "";
 
-if (isAI) {
-    templatePath =
-        container.find(".ai-generated-wrapper").attr("data-template") ||
-        sectionFileMap[selectedId]?.final ||
-        "";
-} else {
-    templatePath =
-        container.attr("data-template") ||
-        sectionFileMap[selectedId]?.original ||
-        "";
-}
-    const sectionObj = {
-        id: selectedId,
-        template: templatePath
-    };
+            const sectionObj = {
+                id: selectedId,
+                template: templatePath
+            };
+            console.log("Saving section:", sectionObj);
+            console.log("selectedPage:", selectedPage);
+            if (!middleSectionsObject[selectedPage]) {
+                middleSectionsObject[selectedPage] = [sectionObj];
+            } else {
+                const index = middleSectionsObject[selectedPage].findIndex(sec => sec.id === selectedId);
+                if (index !== -1) {
+                    middleSectionsObject[selectedPage][index] = sectionObj;
+                } else {
+                    middleSectionsObject[selectedPage].push(sectionObj);
+                }
+            }
 
-if (!middleSectionsObject[selectedPage]) {
-    middleSectionsObject[selectedPage] = [sectionObj];
-} else {
+            showCustomAlert(`The ${selectedId} section added to ${selectedPage}.`, 'success');
 
-    const index = middleSectionsObject[selectedPage]
-        .findIndex(sec => sec.id === selectedId);
+        } else {
 
-    if (index !== -1) {
-        middleSectionsObject[selectedPage][index] = sectionObj; // update
-    } else {
-        middleSectionsObject[selectedPage].push(sectionObj);
-    }
-}
+            if (middleSectionsObject[selectedPage]) {
+                middleSectionsObject[selectedPage] =
+                    middleSectionsObject[selectedPage].filter(sec => sec.id !== selectedId);
 
-    const successMessage = `The ${selectedId} section has been added to the middle section of ${selectedPage}.`;
-    showCustomAlert(successMessage, 'success');
-}else {
+                if (middleSectionsObject[selectedPage].length === 0) {
+                    delete middleSectionsObject[selectedPage];
+                }
+            }
 
-    if (middleSectionsObject[selectedPage]) {
-
-        middleSectionsObject[selectedPage] =
-            middleSectionsObject[selectedPage].filter(sec => sec.id !== selectedId);
-
-        if (middleSectionsObject[selectedPage].length === 0) {
-            delete middleSectionsObject[selectedPage];
+            showCustomAlert(`The ${selectedId} section removed from ${selectedPage}.`, 'danger');
         }
-    }
 
-    const errorMessage = `The ${selectedId} section has been removed from the middle section of ${selectedPage}.`;
-    showCustomAlert(errorMessage, 'danger');
-        }
         setCookie(GLOBAL_MIDDLE_SECTIONS_COOKIE, JSON.stringify(middleSectionsObject), 7);
-
+        console.log(
+            "UPDATED middle_sections COOKIE:",
+            getCookie(GLOBAL_MIDDLE_SECTIONS_COOKIE)
+        );
     }
 }
 
@@ -1853,8 +1923,8 @@ function populateMainAndSubPages() {
 
         // Repopulate dropdown with updated values
         populateMainAndSubPages();
-        const currentHeader = getCookie(GLOBAL_HEADER_COOKIE);
-        $('#selHeaderName').text(currentHeader);
+        const currentHeader = JSON.parse(getCookie(GLOBAL_HEADER_COOKIE) || '{}');
+        $('#selHeaderName').text(currentHeader.id || '');
 
 
 
@@ -1978,8 +2048,8 @@ $("#savePage").on("click", function () {
 
     // Call function to populate pages
     populateMainAndSubPages();
-    const currentHeader = getCookie(GLOBAL_HEADER_COOKIE);
-    $('#selHeaderName').text(currentHeader);
+    const currentHeader = JSON.parse(getCookie(GLOBAL_HEADER_COOKIE) || '{}');
+    $('#selHeaderName').text(currentHeader.id || '');
     // Reset input field and hide input container
     $("#pageNameInput").val("");
     $("#inputContainerMainPage").hide();
@@ -3545,3 +3615,14 @@ $(document).on('click', '.middle_sections_container a, .headers_container a, .fo
     e.preventDefault();
     e.stopPropagation();
 });
+
+function toggleGenerateButton(sectionId) {
+
+    const container = $("#" + sectionId);
+
+    const isChecked =
+        $("#" + sectionId + "_component").is(":checked") ||
+        container.find(".ai-version-checkbox").is(":checked");
+
+    container.find(".generate-btn").prop("disabled", !isChecked);
+}

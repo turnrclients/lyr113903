@@ -1859,7 +1859,53 @@ console.log("categories loaded", window.categories);
                         <h4 class="modal-title w-100 text-center">Add a New Section</h4>
                     </div>
                     <div class="modal-body" id="modalBodyContent">
-                        <div class="container-viewport" id="add_section_container">
+                        <div class="container-viewport">
+
+                            <div id="multi-filter-container" class="multi-filter-container">
+                                <div id="category-filter" class="dropdown category-filter filter-style">
+                                    <p>Select Category</p>
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
+                                        id="categoryDropdownButton">
+                                        <span class="selected-category">
+                                            <i class="ri-grid-fill" style="margin-right:10px;"></i>All
+                                        </span>
+                                        <span class="caret"></span>
+                                    </button>
+                                   <ul class="dropdown-menu dropdown-menu-custom"
+    id="categoryDropdownMenu"
+    style="display:none; position:absolute; z-index:99999;">
+                                </div>
+
+                                <div id="section-filter" class="dropdown section-filter filter-style">
+                                    <p>Select Section</p>
+
+                                    <button
+                                        class="btn btn-default"
+                                        type="button"
+                                        id="sectionDropdownButton">
+
+                                        All <span class="caret"></span>
+                                    </button>
+
+                                    <ul class="dropdown-menu"
+                                        id="sectionDropdownMenu"
+                                        style="display:none; position:absolute; z-index:99999;">
+
+                                        <li class="active"><a tabindex="-1" data-value="allsections">All</a></li>
+                                        {% for sec in subsections %}
+
+                                        <li><a tabindex="-1" data-value="{{ sec.sub_section_name }}">{{ sec.sub_section_name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="modal-wrapper" class="middle-section-wrapper" >
+                                <div id="no-components-message" style="display:none">There are no components available that match your selected category and section. Please select another combination.</div>
+                                <input id="currentSelectedValueOfPageComponents" type="hidden" value="" />
+                                <div class="middle_sections_container middle_section_editmode" id="middle_sections_container"></div>
+                                <span id="back-top" class="text-center fa fa-caret-up"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1879,19 +1925,15 @@ console.log("categories loaded", window.categories);
             enableRadioButtons();
 
             $.ajax({
-                url: '/fms/',
-                type: 'POST',
+                url: '/filter-templates/',
+                type: 'GET',
                 data: {
-                    category: 'All',
+                    subcategory: 'All',
                     subsection: 'allsections',
                     request_src: "addSectonPopup"
                 },
                 success: function (response) {
-                    alert(response)
-                    $('#add_section_container').html(response);
-                    //$(".pagination-container").html(response.pagination_html);
-                    //s$(".#categories_filter_container").html(response.categories_and_subcategories_html);
-
+                    $('#middle_sections_container').html(response.html);
                     $('#no-components-message').hide();
                     loadAllRequiredContents();
                     if ($('#middle_sections_container .component').length > 0) {

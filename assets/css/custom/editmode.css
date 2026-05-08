@@ -639,6 +639,15 @@ border: none!important;
     text-align: -webkit-right;
     left: -21px;
   }
+.middle_section_editmode .radio-holder{
+    position: relative!important;
+}
+.middle_section_editmode .component{
+    scale: 0.88!important;
+}
+.middle_section_editmode .generate-btn{
+    display: none!important;
+}
 
 
 #modalBodyContent .multi-filter-container {
@@ -777,7 +786,9 @@ border: none!important;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: opacity 0.3s ease-in-out;
   }
-
+#dynamicModal #no-components-message{
+  display: none!important;
+}
   #no-components-message.show {
     display: block;
     opacity: 1;
@@ -1439,9 +1450,11 @@ body.dragging-active {
 body.drag-mode .section-wrapper {
     cursor: grab;
 }
-
+body.drag-mode.dragging-active .section-wrapper{
+    position: relative;
+}
 /* ===== TOOLTIP ONLY IN DRAG MODE ===== */
-body.drag-mode .section-wrapper:hover::after {
+body.drag-mode.dragging-active .section-wrapper:hover::after{
     content: "Drag & Drop Section";
     position: absolute;
     top: -30px;
@@ -1456,7 +1469,6 @@ body.drag-mode .section-wrapper:hover::after {
     z-index: 9999;
     opacity: 0.9;
 }
-
 /* ===== PICKED ===== */
 .section-wrapper.picked-up {
     transform: scale(0.96);
