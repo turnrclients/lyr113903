@@ -199,8 +199,10 @@ header.header-39 .navbar-default .navbar-nav > li > a:hover, .navbar-default .na
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(0,0,0,0.5);
-  z-index: -1;
+
+background: linear-gradient(to bottom, rgb(0 153 204 / 57%) 0%, rgb(20 40 70 / 0%) 35%,  rgb(0 0 0 / 5%) 100%);
+
+  z-index: 1;
 }
 
 /* Centered text */
